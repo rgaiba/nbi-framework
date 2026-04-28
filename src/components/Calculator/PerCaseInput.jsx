@@ -4,8 +4,6 @@ import { aggregateCases, adjudicateCase } from '../../lib/nbi.js'
 
 const BLANK_ROW = { Di: 0, A: 1, Df: 1, R: 1 }
 
-// Class pill labels. Agreement cases are adjudicated. They are simply excluded
-// from N_disagree, which the label makes explicit.
 const CLASS_LABEL = {
   B: 'B',
   H: 'H',
@@ -120,12 +118,13 @@ export default function PerCaseInput({ applyCounts }) {
         values are set. Click Apply to push the totals to the dashboard.
       </p>
 
-      <div className="legend-inline">
-        <strong>Legend.</strong>{' '}
-        D<sub>i</sub> = clinician's initial decision.{' '}
-        A = AI's recommendation.{' '}
-        D<sub>f</sub> = clinician's final decision.{' '}
-        R = reference standard. All binary 0/1.
+      <dl className="legend-grid">
+        <dt>D<sub>i</sub></dt> <dd>Clinician's initial decision</dd>
+        <dt>A</dt>             <dd>AI's recommendation</dd>
+        <dt>D<sub>f</sub></dt> <dd>Clinician's final decision</dd>
+        <dt>R</dt>             <dd>Reference standard. All values binary 0/1.</dd>
+      </dl>
+      <div className="legend-note muted">
         Agreement cases (D<sub>i</sub> = A) are adjudicated but excluded from N<sub>disagree</sub>.
       </div>
 
@@ -181,7 +180,7 @@ export default function PerCaseInput({ applyCounts }) {
           <strong>{aggregate.total}</strong> cases · <strong>{aggregate.agreement}</strong> agreement · <strong>{totalDis}</strong> disagreement
         </div>
         <button className="btn btn-primary btn-sm" onClick={apply}>
-          {pushed ? 'Applied ✓' : 'Apply to dashboard'}
+          {pushed ? 'Applied ✓' : 'Apply'}
         </button>
       </div>
 

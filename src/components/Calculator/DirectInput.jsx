@@ -41,11 +41,12 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
         Set the four outcome counts directly. Updates the dashboard live.
       </p>
 
-      <div className="legend-inline">
-        <strong>Legend.</strong> B = beneficial change (wrong → right after AI nudge).
-        H = harmful change (right → wrong). IR = inappropriate resistance (stayed wrong).
-        AR = appropriate resistance (stayed right).
-      </div>
+      <dl className="legend-grid">
+        <dt>B</dt>  <dd>Beneficial change · Wrong → Right</dd>
+        <dt>H</dt>  <dd>Harmful change · Right → Wrong</dd>
+        <dt>IR</dt> <dd>Inappropriate resistance · Wrong → Wrong</dd>
+        <dt>AR</dt> <dd>Appropriate resistance · Right → Right</dd>
+      </dl>
 
       <div className="direct-fields">
         {FIELDS.map(f => (
@@ -68,8 +69,8 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
       </div>
 
       <div className="direct-actions">
-        <button className="btn btn-ghost btn-sm" onClick={reset}>Reset to zero</button>
-        <button className="btn btn-ghost btn-sm" onClick={sample}>Load random sample</button>
+        <button className="btn btn-ghost btn-sm" onClick={reset}>Reset</button>
+        <button className="btn btn-ghost btn-sm" onClick={sample}>Random Sample</button>
       </div>
     </div>
   )

@@ -1,16 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { interpretMetric, formatMetric, formatCI } from '../../lib/nbi.js'
 
-// Compact dashboard. Single component, four sections inline:
-// hero NBI card, small metric cards (with 95% CIs), 2x2 adjudication matrix,
-// influence flow bar. Each section carries its own caption.
+// Compact dashboard.
+// Default view: NBI hero + four small metric cards filling the pane height.
+// Toggleable details: 2×2 adjudication matrix and influence flow.
 export default function Dashboard({ counts, metrics }) {
+  const [showDetails, setShowDetails] = useState(false)
+
   return (
     <div className="dashboard">
       <NbiHero metrics={metrics} />
       <SmallMetrics metrics={metrics} />
-      <AdjudicationMatrix counts={counts} />
-      <InfluenceFlow counts={counts} />
+
+      {showDetails && (
+        <div className="dash-details">
+          <AdjudicationMatrix counts={counts} />
+          <InfluenceFlow counts={counts} />
+        </div>
+      )}
+
+      <button
+        className="dash-toggle"
+        onClick={() => setShowDetails(s => !s)}
+        aria-expanded={showDetails}
+        aria-controls="dash-details"
+      >
+        <span>{showDetails ? 'Hide details' : 'Show adjudication matrix and influence flow'}</span>
+        <span className={`dash-toggle-chev ${showDetails ? 'is-open' : ''}`} aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+      </button>
     </div>
   )
 }
@@ -56,7 +77,8 @@ function SmallMetrics({ metrics }) {
       </div>
       <div className="dash-caption">
         Secondary metrics with 95% confidence intervals (Wilson score).
-        AIR shows change quality; ECR catches algorithm aversion; EIR catches automation bias; DIR is the overall change rate.
+        AIR shows change quality; ECR catches algorithm aversion;
+        EIR catches automation bias; DIR is the overall change rate.
       </div>
     </div>
   )
@@ -137,7 +159,8 @@ function InfluenceFlow({ counts }) {
         ))}
       </div>
       <div className="dash-caption">
-        Composition of the disagreement subset by outcome class. Visualises where N<sub>disagree</sub> goes.
+        Composition of the disagreement subset by outcome class.
+        Visualises where N<sub>disagree</sub> goes.
       </div>
     </div>
   )

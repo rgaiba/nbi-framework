@@ -1,5 +1,5 @@
 /* =============================================================================
-   COMPONENT STYLES . v3 (calculator-first, two-pane, captions, CIs)
+   COMPONENT STYLES . v4 (calculator-first, two-pane, details toggle)
    Mobile-first; the desktop breakpoint flips pane order so the dashboard
    reads top-left on desktop and the calculator stays on top on phone.
 ============================================================================= */
@@ -81,36 +81,34 @@
 /* ── MAIN ────────────────────────────────────────────────────────────── */
 .main {
   min-height: calc(100vh - var(--nav-h) - 60px);
-  padding: clamp(16px, 2vw, 28px) 0 clamp(40px, 5vw, 64px);
+  padding: clamp(20px, 2.4vw, 36px) 0 clamp(40px, 5vw, 64px);
 }
 
 /* ── TWO-PANE LAYOUT ─────────────────────────────────────────────────── */
 .two-pane {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(16px, 2vw, 22px);
+  gap: clamp(20px, 3vw, 32px);
 }
-.pane { min-width: 0; }
+.pane { min-width: 0; display: flex; flex-direction: column; }
 .pane-calculator { order: 1; }
 .pane-dashboard  { order: 2; }
 
 @media (min-width: 880px) {
   .two-pane {
     grid-template-columns: 1fr 1fr;
-    gap: clamp(20px, 2.4vw, 32px);
-    align-items: start;
+    gap: clamp(28px, 3.5vw, 48px);
+    align-items: stretch;
   }
   .pane-dashboard  { order: 1; }
   .pane-calculator { order: 2; }
-  .pane-dashboard {
-    position: sticky;
-    top: calc(var(--nav-h) + 16px);
-  }
 }
 
 /* ── DASHBOARD ───────────────────────────────────────────────────────── */
 .dashboard {
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex; flex-direction: column;
+  gap: 16px;
+  height: 100%;
 }
 .dash-section-label {
   font-size: 10.5px; font-weight: 700;
@@ -119,9 +117,8 @@
   margin-bottom: 4px;
 }
 
-/* In-tile caption: dim, small, italics. Lives at the bottom of each tile. */
 .dash-caption {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 11.5px;
   color: var(--txt-3);
   line-height: 1.55;
@@ -132,17 +129,18 @@
 .dash-hero {
   background: var(--surface-2);
   border-radius: var(--radius-lg);
-  padding: 18px 20px;
+  padding: 22px 24px;
+  flex-shrink: 0;
 }
 .dash-hero-label {
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--txt-3);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .dash-hero-val {
   font-family: var(--font-mono);
-  font-size: clamp(30px, 4vw, 44px);
+  font-size: clamp(32px, 4.2vw, 48px);
   font-weight: 700;
   line-height: 1;
   color: var(--txt);
@@ -156,29 +154,38 @@
   font-family: var(--font-mono);
   font-size: 11.5px;
   color: var(--txt-3);
-  margin-top: 4px;
+  margin-top: 6px;
   font-feature-settings: "tnum" 1;
 }
 .dash-hero-interp {
   font-size: 12px;
   color: var(--txt-2);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
+/* Small-metrics wrap fills the remaining vertical space in the dashboard pane.
+   When details are hidden, this stretches the four cards to match the height
+   of the calculator pane. When details are shown, the wrap shrinks to allow
+   matrix + flow space below. */
 .dash-small-wrap {
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .dash-small {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 10px;
+  flex: 1;
 }
 @media (min-width: 1180px) { .dash-small { grid-template-columns: repeat(4, 1fr); } }
 .dash-small-card {
   background: var(--surface-2);
   border-radius: var(--radius);
-  padding: 12px;
-  display: flex; flex-direction: column; gap: 3px;
+  padding: 14px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  justify-content: center;
 }
 .dash-small-label {
   font-size: 11px; font-weight: 600;
@@ -188,7 +195,7 @@
 }
 .dash-small-val {
   font-family: var(--font-mono);
-  font-size: 18px; font-weight: 700;
+  font-size: 20px; font-weight: 700;
   color: var(--txt);
   font-feature-settings: "tnum" 1;
 }
@@ -204,7 +211,37 @@
   background: white;
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
+  padding: 16px 18px;
+}
+
+.dash-details {
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.dash-toggle {
+  margin-top: 4px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm); font-weight: 500;
+  color: var(--txt-2);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.dash-toggle:hover {
+  background: white;
+  border-color: var(--border);
+  color: var(--navy);
+}
+.dash-toggle-chev {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+.dash-toggle-chev.is-open {
+  transform: rotate(180deg);
 }
 
 .dash-matrix {
@@ -307,8 +344,8 @@
   background: white;
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
-  padding: 14px 14px;
-  display: flex; flex-direction: column; gap: 12px;
+  padding: 16px 16px;
+  display: flex; flex-direction: column; gap: 14px;
 }
 
 .calc-tabs {
@@ -319,7 +356,7 @@
 }
 .calc-tab {
   flex: 1;
-  padding: 7px 10px;
+  padding: 8px 10px;
   font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--txt-2);
@@ -335,24 +372,42 @@
   box-shadow: var(--shadow-sm);
 }
 
-.calc-panel { display: flex; flex-direction: column; gap: 12px; }
+.calc-panel { display: flex; flex-direction: column; gap: 14px; }
 .calc-panel p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; }
 
-/* Inline legend used inside calculator tabs to define variables. */
-.legend-inline {
-  font-size: 11.5px;
-  line-height: 1.55;
-  color: var(--txt-2);
+/* ── LEGEND GRID (used in Direct and Per-case tabs) ──────────────────── */
+.legend-grid {
+  margin: 0;
+  padding: 12px 14px;
   background: var(--surface-2);
-  padding: 10px 12px;
   border-radius: var(--radius);
   border: 1px solid var(--border-soft);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  align-items: baseline;
 }
-.legend-inline strong {
-  font-weight: 600;
+.legend-grid dt {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
   color: var(--txt);
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum" 1;
 }
-.legend-inline sub { font-size: 0.78em; }
+.legend-grid dt sub { font-size: 0.78em; }
+.legend-grid dd {
+  margin: 0;
+  color: var(--txt-2);
+}
+.legend-note {
+  font-size: 11px;
+  line-height: 1.55;
+  padding: 0 14px;
+}
+.legend-note sub { font-size: 0.78em; }
 
 /* ── DIRECT INPUT ────────────────────────────────────────────────────── */
 .direct-fields {
@@ -405,11 +460,9 @@
   box-shadow: 0 0 0 3px rgba(0, 47, 94, 0.15);
 }
 
-/* Action row for Reset + Load random sample. Sits below the colored cards
-   with its own spacing so it doesn't read as part of any single field. */
 .direct-actions {
   display: flex; flex-wrap: wrap; gap: 8px;
-  padding-top: 4px;
+  padding-top: 10px;
   margin-top: 4px;
   border-top: 1px solid var(--border-soft);
 }
@@ -533,7 +586,7 @@
 .cases-summary strong { font-family: var(--font-mono); color: var(--txt); }
 
 .cases-csv {
-  margin-top: 4px;
+  margin-top: 6px;
   padding: 12px 14px;
   background: var(--surface-2);
   border-radius: var(--radius);
