@@ -1,9 +1,9 @@
 import React from 'react'
-import { interpretMetric, formatMetric } from '../../lib/nbi.js'
+import { interpretMetric, formatMetric, formatCI } from '../../lib/nbi.js'
 
-// Compact dashboard — single component, all four sections inline.
-// Mirrors the approved prototype: NBI hero card → 2x2 small metrics →
-// adjudication matrix → influence flow bar.
+// Compact dashboard. Single component, four sections inline:
+// hero NBI card, small metric cards (with 95% CIs), 2x2 adjudication matrix,
+// influence flow bar. Each section carries its own caption.
 export default function Dashboard({ counts, metrics }) {
   return (
     <div className="dashboard">
@@ -19,32 +19,45 @@ function NbiHero({ metrics }) {
   const v = metrics.NBI
   const interp = interpretMetric('NBI', v)
   const cls = v === null ? '' : v > 0 ? 'val-pos' : v < 0 ? 'val-neg' : 'val-zero'
-  const display = v === null ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(1)}%`
+  const display = v === null ? 'n/a' : `${v > 0 ? '+' : ''}${v.toFixed(1)}%`
+  const ci = formatCI('NBI', metrics.NBI_CI)
   return (
     <div className="dash-hero">
       <div className="dash-hero-label">Net beneficial influence</div>
       <div className={`dash-hero-val ${cls}`}>{display}</div>
+      {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
       <div className="dash-hero-interp">{interp}</div>
+      <div className="dash-caption">
+        Primary metric. Net direction of AI influence on the disagreement subset.
+        Formula: (B − H) / N<sub>disagree</sub> × 100.
+      </div>
     </div>
   )
 }
 
 const SMALL = [
-  { k: 'AIR', name: 'AIR' },
-  { k: 'DIR', name: 'DIR' },
-  { k: 'ECR', name: 'ECR' },
-  { k: 'EIR', name: 'EIR' },
+  { k: 'AIR', name: 'AIR', desc: 'Appropriate Influence Ratio. B / (B + H).' },
+  { k: 'DIR', name: 'DIR', desc: 'Decision Influence Rate. (B + H) / N.' },
+  { k: 'ECR', name: 'ECR', desc: 'Error Correction Rate. B / (B + IR).' },
+  { k: 'EIR', name: 'EIR', desc: 'Error Induction Rate. H / (H + AR).' },
 ]
 
 function SmallMetrics({ metrics }) {
   return (
-    <div className="dash-small">
-      {SMALL.map(s => (
-        <div key={s.k} className="dash-small-card">
-          <div className="dash-small-label">{s.name}</div>
-          <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
-        </div>
-      ))}
+    <div className="dash-small-wrap">
+      <div className="dash-small">
+        {SMALL.map(s => (
+          <div key={s.k} className="dash-small-card">
+            <div className="dash-small-label" title={s.desc}>{s.name}</div>
+            <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
+            <div className="dash-small-ci">{formatCI(s.k, metrics[`${s.k}_CI`])}</div>
+          </div>
+        ))}
+      </div>
+      <div className="dash-caption">
+        Secondary metrics with 95% confidence intervals (Wilson score).
+        AIR shows change quality; ECR catches algorithm aversion; EIR catches automation bias; DIR is the overall change rate.
+      </div>
     </div>
   )
 }
@@ -63,6 +76,10 @@ function AdjudicationMatrix({ counts }) {
         <div className="dash-matrix-v">Right</div>
         <Cell code="H"  count={counts.H}  cls="cell-h"  />
         <Cell code="AR" count={counts.AR} cls="cell-ar" />
+      </div>
+      <div className="dash-caption">
+        Each disagreement case sorts into one cell. Rows: clinician initially correct vs.
+        wrong (versus reference standard). Columns: did the clinician change after AI nudge.
       </div>
     </div>
   )
@@ -118,6 +135,9 @@ function InfluenceFlow({ counts }) {
             <span>{s.k}</span>
           </span>
         ))}
+      </div>
+      <div className="dash-caption">
+        Composition of the disagreement subset by outcome class. Visualises where N<sub>disagree</sub> goes.
       </div>
     </div>
   )

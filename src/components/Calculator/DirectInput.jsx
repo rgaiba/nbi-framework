@@ -7,6 +7,10 @@ const FIELDS = [
   { k: 'AR', label: 'Appropriate resistance',    hint: 'Right → Right',   cls: 'field-ar' },
 ]
 
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
 export default function DirectInput({ counts, updateCounts, onAnyChange }) {
   const handle = (k, raw) => {
     const v = Math.max(0, Math.floor(Number(raw) || 0))
@@ -19,9 +23,30 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
     if (onAnyChange) onAnyChange()
   }
 
+  // Random sample biased toward realistic-looking distributions: more AR than H,
+  // moderate B, modest IR. Adds visual variety without producing nonsense.
+  const sample = () => {
+    updateCounts({
+      B:  rand(8, 35),
+      H:  rand(2, 18),
+      IR: rand(3, 20),
+      AR: rand(15, 45),
+    })
+    if (onAnyChange) onAnyChange()
+  }
+
   return (
     <div className="direct">
-      <p className="muted">Set the four outcome counts directly. Updates the dashboard live.</p>
+      <p className="muted">
+        Set the four outcome counts directly. Updates the dashboard live.
+      </p>
+
+      <div className="legend-inline">
+        <strong>Legend.</strong> B = beneficial change (wrong → right after AI nudge).
+        H = harmful change (right → wrong). IR = inappropriate resistance (stayed wrong).
+        AR = appropriate resistance (stayed right).
+      </div>
+
       <div className="direct-fields">
         {FIELDS.map(f => (
           <div key={f.k} className={`direct-row ${f.cls}`}>
@@ -41,7 +66,11 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
           </div>
         ))}
       </div>
-      <button className="btn btn-ghost btn-sm direct-reset" onClick={reset}>Reset to zero</button>
+
+      <div className="direct-actions">
+        <button className="btn btn-ghost btn-sm" onClick={reset}>Reset to zero</button>
+        <button className="btn btn-ghost btn-sm" onClick={sample}>Load random sample</button>
+      </div>
     </div>
   )
 }

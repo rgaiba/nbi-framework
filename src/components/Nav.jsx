@@ -7,11 +7,11 @@ export default function Nav({ view, setView }) {
         <button
           className="nav-brand"
           onClick={() => setView('calculator')}
-          aria-label="Net Beneficial Influence — go to calculator"
+          aria-label="Net Beneficial Influence, go to calculator"
         >
-          <span className="nav-mark" aria-hidden="true">NBI</span>
-          <span className="nav-title">Net Beneficial Influence</span>
-          <span className="nav-version">v1.0</span>
+          <span className="nav-mark">NBI</span>
+          <span className="nav-divider" aria-hidden="true" />
+          <span className="nav-wordmark">Net Beneficial Influence</span>
         </button>
         <nav className="nav-tabs" aria-label="Primary">
           <button

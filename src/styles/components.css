@@ -1,8 +1,7 @@
 /* =============================================================================
-   COMPONENT STYLES — v2 (calculator-first, two-pane)
-   Mirrors the approved prototype. Mobile-first; flips pane order at the
-   desktop breakpoint so the dashboard reads top-left on desktop and the
-   calculator stays on top on phone.
+   COMPONENT STYLES . v3 (calculator-first, two-pane, captions, CIs)
+   Mobile-first; the desktop breakpoint flips pane order so the dashboard
+   reads top-left on desktop and the calculator stays on top on phone.
 ============================================================================= */
 
 /* ── NAV ─────────────────────────────────────────────────────────────── */
@@ -18,31 +17,35 @@
   height: var(--nav-h); gap: 12px;
 }
 .nav-brand {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: none; padding: 4px 6px; border-radius: var(--radius);
+  display: inline-flex; align-items: center; gap: 12px;
+  background: none; padding: 6px 8px; border-radius: var(--radius);
   cursor: pointer;
 }
 .nav-brand:hover { background: var(--surface-2); }
 .nav-mark {
-  width: 28px; height: 28px;
-  background: var(--navy); color: white;
-  border-radius: 6px;
-  display: inline-flex; align-items: center; justify-content: center;
-  font-family: var(--font-serif);
-  font-size: 12px; font-weight: 700; letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--navy);
+  background: var(--slate);
+  padding: 4px 9px;
+  border-radius: 4px;
   flex-shrink: 0;
 }
-.nav-title {
-  font-family: var(--font-serif);
-  font-size: 16px; font-weight: 700;
-  color: var(--txt);
+.nav-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.nav-wordmark {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
   letter-spacing: -0.005em;
+  color: var(--txt);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.nav-version {
-  font-size: 11px; color: var(--txt-3);
-  font-family: var(--font-mono);
-  flex-shrink: 0;
 }
 
 .nav-tabs {
@@ -69,9 +72,10 @@
   box-shadow: var(--shadow-sm);
 }
 
-@media (max-width: 520px) {
-  .nav-title { display: none; }
+@media (max-width: 540px) {
+  .nav-wordmark, .nav-divider { display: none; }
   .nav-tab { padding: 6px 10px; font-size: 12px; }
+  .nav-mark { font-size: 12px; padding: 3px 8px; }
 }
 
 /* ── MAIN ────────────────────────────────────────────────────────────── */
@@ -81,10 +85,6 @@
 }
 
 /* ── TWO-PANE LAYOUT ─────────────────────────────────────────────────── */
-/*
-  Mobile (default): single column. Calculator on top (order: 1),
-  dashboard below (order: 2) — matches the approved prototype's phone view.
-*/
 .two-pane {
   display: grid;
   grid-template-columns: 1fr;
@@ -94,7 +94,6 @@
 .pane-calculator { order: 1; }
 .pane-dashboard  { order: 2; }
 
-/* Desktop: side-by-side. Dashboard left, calculator right. */
 @media (min-width: 880px) {
   .two-pane {
     grid-template-columns: 1fr 1fr;
@@ -103,8 +102,6 @@
   }
   .pane-dashboard  { order: 1; }
   .pane-calculator { order: 2; }
-  /* Sticky dashboard on desktop so it stays visible while scrolling the
-     calculator. Slight top offset accounts for the sticky nav. */
   .pane-dashboard {
     position: sticky;
     top: calc(var(--nav-h) + 16px);
@@ -119,7 +116,18 @@
   font-size: 10.5px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--txt-2);
+  margin-bottom: 4px;
 }
+
+/* In-tile caption: dim, small, italics. Lives at the bottom of each tile. */
+.dash-caption {
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--txt-3);
+  line-height: 1.55;
+  font-style: italic;
+}
+.dash-caption sub { font-style: normal; }
 
 .dash-hero {
   background: var(--surface-2);
@@ -144,13 +152,22 @@
 .dash-hero-val.val-pos  { color: var(--green); }
 .dash-hero-val.val-neg  { color: var(--red); }
 .dash-hero-val.val-zero { color: var(--txt-2); }
+.dash-hero-ci {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-3);
+  margin-top: 4px;
+  font-feature-settings: "tnum" 1;
+}
 .dash-hero-interp {
   font-size: 12px;
   color: var(--txt-2);
-  font-style: italic;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
+.dash-small-wrap {
+  display: flex; flex-direction: column; gap: 8px;
+}
 .dash-small {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -161,18 +178,26 @@
   background: var(--surface-2);
   border-radius: var(--radius);
   padding: 12px;
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column; gap: 3px;
 }
 .dash-small-label {
   font-size: 11px; font-weight: 600;
   color: var(--txt-3);
   letter-spacing: 0.04em;
+  cursor: help;
 }
 .dash-small-val {
   font-family: var(--font-mono);
   font-size: 18px; font-weight: 700;
   color: var(--txt);
   font-feature-settings: "tnum" 1;
+}
+.dash-small-ci {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--txt-3);
+  font-feature-settings: "tnum" 1;
+  min-height: 14px;
 }
 
 .dash-tile {
@@ -313,7 +338,23 @@
 .calc-panel { display: flex; flex-direction: column; gap: 12px; }
 .calc-panel p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; }
 
-/* — Direct — */
+/* Inline legend used inside calculator tabs to define variables. */
+.legend-inline {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--txt-2);
+  background: var(--surface-2);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.legend-inline strong {
+  font-weight: 600;
+  color: var(--txt);
+}
+.legend-inline sub { font-size: 0.78em; }
+
+/* ── DIRECT INPUT ────────────────────────────────────────────────────── */
 .direct-fields {
   display: flex; flex-direction: column; gap: 8px;
 }
@@ -363,9 +404,17 @@
   border-color: var(--navy);
   box-shadow: 0 0 0 3px rgba(0, 47, 94, 0.15);
 }
-.direct-reset { align-self: flex-start; }
 
-/* — Scenarios — */
+/* Action row for Reset + Load random sample. Sits below the colored cards
+   with its own spacing so it doesn't read as part of any single field. */
+.direct-actions {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding-top: 4px;
+  margin-top: 4px;
+  border-top: 1px solid var(--border-soft);
+}
+
+/* ── SCENARIOS ───────────────────────────────────────────────────────── */
 .scenarios-list {
   display: flex; flex-direction: column; gap: 8px;
 }
@@ -407,7 +456,7 @@
   font-family: var(--font-mono);
 }
 
-/* — Per-case — */
+/* ── PER-CASE ────────────────────────────────────────────────────────── */
 .cases-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -460,12 +509,18 @@
   padding: 2px 7px;
   border-radius: 4px;
   border: 1px solid;
+  white-space: nowrap;
 }
 .class-B  { background: #eaf3de; color: #173404; border-color: rgba(99,153,34,0.4); }
 .class-H  { background: #fcebeb; color: #501313; border-color: rgba(226,75,74,0.4); }
 .class-IR { background: #faeeda; color: #412402; border-color: rgba(186,117,23,0.4); }
 .class-AR { background: #e6f1fb; color: #042c53; border-color: rgba(55,138,221,0.4); }
-.class-agreement { background: var(--surface-3); color: var(--txt-3); border-color: var(--border); }
+.class-agreement {
+  background: var(--surface-3);
+  color: var(--txt-3);
+  border-color: var(--border);
+  font-style: italic;
+}
 
 .cases-actions {
   display: flex; align-items: center; flex-wrap: wrap;
@@ -518,7 +573,7 @@
 }
 .csv-errors ul { margin: 4px 0 0 18px; }
 
-/* ── ABOUT (placeholder for now) ─────────────────────────────────────── */
+/* ── ABOUT (placeholder) ─────────────────────────────────────────────── */
 .about-placeholder {
   max-width: 720px;
   margin: 0 auto;

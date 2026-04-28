@@ -4,8 +4,14 @@ import { aggregateCases, adjudicateCase } from '../../lib/nbi.js'
 
 const BLANK_ROW = { Di: 0, A: 1, Df: 1, R: 1 }
 
+// Class pill labels. Agreement cases are adjudicated. They are simply excluded
+// from N_disagree, which the label makes explicit.
 const CLASS_LABEL = {
-  B: 'B', H: 'H', IR: 'IR', AR: 'AR', agreement: 'Agree',
+  B: 'B',
+  H: 'H',
+  IR: 'IR',
+  AR: 'AR',
+  agreement: 'Agree · excluded',
 }
 
 const REQUIRED = ['Di', 'A', 'Df', 'R']
@@ -110,9 +116,18 @@ export default function PerCaseInput({ applyCounts }) {
   return (
     <div className="cases">
       <p className="muted">
-        Add cases one by one. Each row: D<sub>i</sub>, A, D<sub>f</sub>, R (binary 0/1).
-        Auto-classified into B / H / IR / AR.
+        Add cases one by one. Each row is auto-classified as soon as all four
+        values are set. Click Apply to push the totals to the dashboard.
       </p>
+
+      <div className="legend-inline">
+        <strong>Legend.</strong>{' '}
+        D<sub>i</sub> = clinician's initial decision.{' '}
+        A = AI's recommendation.{' '}
+        D<sub>f</sub> = clinician's final decision.{' '}
+        R = reference standard. All binary 0/1.
+        Agreement cases (D<sub>i</sub> = A) are adjudicated but excluded from N<sub>disagree</sub>.
+      </div>
 
       <div className="cases-table-wrap">
         <table className="cases-table">
@@ -186,7 +201,7 @@ export default function PerCaseInput({ applyCounts }) {
             <strong>Issues:</strong>
             <ul>
               {csvErrors.slice(0, 5).map((e, i) => <li key={i}>{e}</li>)}
-              {csvErrors.length > 5 && <li>…and {csvErrors.length - 5} more</li>}
+              {csvErrors.length > 5 && <li>and {csvErrors.length - 5} more</li>}
             </ul>
           </div>
         )}
