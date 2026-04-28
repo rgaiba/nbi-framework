@@ -1,16 +1,16 @@
 import React from 'react'
 
 const FIELDS = [
-  { key: 'B',  label: 'Beneficial Change',         hint: 'Wrong → Right (Correct₍ᵢ₎=0, ΔD=1)', cls: 'cell-b'  },
-  { key: 'H',  label: 'Harmful Change',            hint: 'Right → Wrong (Correct₍ᵢ₎=1, ΔD=1)', cls: 'cell-h'  },
-  { key: 'IR', label: 'Inappropriate Resistance',  hint: 'Wrong → Wrong (Correct₍ᵢ₎=0, ΔD=0)', cls: 'cell-ir' },
-  { key: 'AR', label: 'Appropriate Resistance',    hint: 'Right → Right (Correct₍ᵢ₎=1, ΔD=0)', cls: 'cell-ar' },
+  { k: 'B',  label: 'Beneficial change',         hint: 'Wrong → Right',   cls: 'field-b'  },
+  { k: 'H',  label: 'Harmful change',            hint: 'Right → Wrong',   cls: 'field-h'  },
+  { k: 'IR', label: 'Inappropriate resistance',  hint: 'Wrong → Wrong',   cls: 'field-ir' },
+  { k: 'AR', label: 'Appropriate resistance',    hint: 'Right → Right',   cls: 'field-ar' },
 ]
 
 export default function DirectInput({ counts, updateCounts, onAnyChange }) {
-  const handle = (key, raw) => {
+  const handle = (k, raw) => {
     const v = Math.max(0, Math.floor(Number(raw) || 0))
-    updateCounts({ [key]: v })
+    updateCounts({ [k]: v })
     if (onAnyChange) onAnyChange()
   }
 
@@ -20,47 +20,28 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
   }
 
   return (
-    <div className="direct-input">
-      <div className="direct-header">
-        <p className="muted">
-          Adjust each cell of the 2×2 matrix directly. Use the sliders for quick exploration or
-          type values for precision. Counts are integers ≥ 0.
-        </p>
-        <button className="btn btn-ghost btn-sm" onClick={reset}>Reset to zero</button>
-      </div>
-
-      <div className="direct-grid">
+    <div className="direct">
+      <p className="muted">Set the four outcome counts directly. Updates the dashboard live.</p>
+      <div className="direct-fields">
         {FIELDS.map(f => (
-          <div key={f.key} className={`direct-field ${f.cls}`}>
-            <label htmlFor={`f-${f.key}`}>
-              <span className="direct-key">{f.key}</span>
-              <span className="direct-label">{f.label}</span>
-            </label>
-            <div className="direct-controls">
-              <input
-                id={`f-${f.key}`}
-                type="number"
-                min="0"
-                step="1"
-                value={counts[f.key]}
-                onChange={(e) => handle(f.key, e.target.value)}
-                className="direct-num"
-              />
-              <input
-                type="range"
-                min="0"
-                max="200"
-                step="1"
-                value={Math.min(200, counts[f.key])}
-                onChange={(e) => handle(f.key, e.target.value)}
-                className="direct-range"
-                aria-label={`${f.label} slider`}
-              />
+          <div key={f.k} className={`direct-row ${f.cls}`}>
+            <div className="direct-meta">
+              <div className="direct-label">{f.k} · {f.label}</div>
+              <div className="direct-hint">{f.hint}</div>
             </div>
-            <div className="direct-hint">{f.hint}</div>
+            <input
+              type="number"
+              min="0"
+              step="1"
+              value={counts[f.k]}
+              onChange={(e) => handle(f.k, e.target.value)}
+              className="direct-num"
+              aria-label={f.label}
+            />
           </div>
         ))}
       </div>
+      <button className="btn btn-ghost btn-sm direct-reset" onClick={reset}>Reset to zero</button>
     </div>
   )
 }

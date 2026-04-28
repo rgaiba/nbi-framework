@@ -1,59 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-const LINKS = [
-  { id: 'framework', label: 'Framework' },
-  { id: 'calculator', label: 'Calculator' },
-  { id: 'dashboard',  label: 'Dashboard' },
-  { id: 'about',      label: 'About' },
-]
-
-export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const handleClick = (e, id) => {
-    e.preventDefault()
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      setOpen(false)
-    }
-  }
-
+export default function Nav({ view, setView }) {
   return (
-    <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+    <header className="nav">
       <div className="container nav-inner">
-        <a href="#top" className="nav-brand" onClick={(e) => handleClick(e, 'top')}>
-          <span className="nav-mark" aria-hidden="true">NBI</span>
-          <span className="nav-title">
-            <span className="nav-title-main">Net Beneficial Influence</span>
-            <span className="nav-title-sub">Framework · Interactive Demo</span>
-          </span>
-        </a>
-
-        <nav className={`nav-links ${open ? 'nav-links--open' : ''}`} aria-label="Primary">
-          {LINKS.map(l => (
-            <a key={l.id} href={`#${l.id}`} onClick={(e) => handleClick(e, l.id)}>
-              {l.label}
-            </a>
-          ))}
-        </nav>
-
         <button
-          className="nav-toggle"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          onClick={() => setOpen(o => !o)}
+          className="nav-brand"
+          onClick={() => setView('calculator')}
+          aria-label="Net Beneficial Influence — go to calculator"
         >
-          <span /><span /><span />
+          <span className="nav-mark" aria-hidden="true">NBI</span>
+          <span className="nav-title">Net Beneficial Influence</span>
+          <span className="nav-version">v1.0</span>
         </button>
+        <nav className="nav-tabs" aria-label="Primary">
+          <button
+            className={`nav-tab ${view === 'calculator' ? 'is-active' : ''}`}
+            onClick={() => setView('calculator')}
+            aria-current={view === 'calculator' ? 'page' : undefined}
+          >
+            Calculator
+          </button>
+          <button
+            className={`nav-tab ${view === 'about' ? 'is-active' : ''}`}
+            onClick={() => setView('about')}
+            aria-current={view === 'about' ? 'page' : undefined}
+          >
+            About
+          </button>
+        </nav>
       </div>
     </header>
   )

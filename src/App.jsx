@@ -1,7 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react'
 import Nav from './components/Nav.jsx'
-import Hero from './components/Hero.jsx'
-import Walkthrough from './components/Walkthrough.jsx'
 import Calculator from './components/Calculator/Calculator.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
 import About from './components/About.jsx'
@@ -11,12 +9,14 @@ import { SCENARIOS, DEFAULT_SCENARIO_ID } from './lib/scenarios.js'
 import './styles/components.css'
 
 export default function App() {
-  // Single source of truth — all input modes write to {B, H, AR, IR}.
+  // Two views: 'calculator' (home) and 'about'.
+  const [view, setView] = useState('calculator')
+
+  // Single source of truth for the calculator. All input modes write to {B, H, IR, AR}.
   const initial = SCENARIOS.find(s => s.id === DEFAULT_SCENARIO_ID).counts
   const [counts, setCounts] = useState(initial)
   const [activeScenarioId, setActiveScenarioId] = useState(DEFAULT_SCENARIO_ID)
 
-  // Derived metrics — recomputed on every counts change.
   const metrics = useMemo(() => computeMetrics(counts), [counts])
 
   const updateCounts = useCallback((next) => {
@@ -33,20 +33,28 @@ export default function App() {
 
   return (
     <>
-      <a className="skip-link" href="#calculator">Skip to calculator</a>
-      <Nav />
-      <main>
-        <Hero />
-        <Walkthrough />
-        <Calculator
-          counts={counts}
-          updateCounts={updateCounts}
-          loadScenario={loadScenario}
-          activeScenarioId={activeScenarioId}
-          setActiveScenarioId={setActiveScenarioId}
-        />
-        <Dashboard counts={counts} metrics={metrics} />
-        <About />
+      <Nav view={view} setView={setView} />
+      <main className="main">
+        <div className="container">
+          {view === 'calculator' ? (
+            <div className="two-pane">
+              <section className="pane pane-dashboard" aria-label="Live metrics dashboard">
+                <Dashboard counts={counts} metrics={metrics} />
+              </section>
+              <section className="pane pane-calculator" aria-label="Calculator inputs">
+                <Calculator
+                  counts={counts}
+                  updateCounts={updateCounts}
+                  loadScenario={loadScenario}
+                  activeScenarioId={activeScenarioId}
+                  setActiveScenarioId={setActiveScenarioId}
+                />
+              </section>
+            </div>
+          ) : (
+            <About />
+          )}
+        </div>
       </main>
       <Footer />
     </>
