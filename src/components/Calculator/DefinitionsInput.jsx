@@ -1,13 +1,15 @@
 import React from 'react'
+import { AdjMatrixGrid } from '../Dashboard/Dashboard.jsx'
 
-// Definitions tab: variable legend only. Each metric's formula now lives
-// next to its computed value in the dashboard.
+// Definitions tab: variable legend, then the adjudication matrix structure
+// (no counts, just the four classes shown as chips). Helps users see how
+// B / H / IR / AR are derived from the two binary axes.
 export default function DefinitionsInput() {
   return (
     <div className="definitions">
       <p className="muted">
-        Variable definitions for the framework. Formulas for the five metrics
-        are displayed alongside their computed values in the dashboard.
+        Variable definitions and the structure of the adjudication matrix.
+        Live values and formulas appear in the dashboard.
       </p>
 
       <div className="legend-box">
@@ -22,17 +24,15 @@ export default function DefinitionsInput() {
         </div>
       </div>
 
-      <div className="legend-box">
-        <dl className="legend-grid legend-grid-2col">
-          <dt><span className="def-chip def-chip-B">B</span></dt>
-            <dd>Beneficial change. Wrong → Right.</dd>
-          <dt><span className="def-chip def-chip-H">H</span></dt>
-            <dd>Harmful change. Right → Wrong.</dd>
-          <dt><span className="def-chip def-chip-IR">IR</span></dt>
-            <dd>Inappropriate resistance. Wrong → Wrong.</dd>
-          <dt><span className="def-chip def-chip-AR">AR</span></dt>
-            <dd>Appropriate resistance. Right → Right.</dd>
-        </dl>
+      <div className="def-matrix-box">
+        <div className="def-section-label">Adjudication matrix</div>
+        <AdjMatrixGrid />
+        <div className="def-meaning">
+          Each disagreement case is classified by two binary axes. The Y-axis
+          asks whether the clinician's initial decision matched the reference
+          standard. The X-axis asks whether the clinician changed their decision
+          after seeing the AI's recommendation.
+        </div>
       </div>
     </div>
   )

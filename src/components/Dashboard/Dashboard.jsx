@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
 import { interpretMetric, formatMetric, formatCI } from '../../lib/nbi.js'
 
-// Inline colored variable chip used in formulas. Same palette as class-pill.
+// Inline colored variable chip used in formulas.
 function Chip({ k }) {
   return <span className={`def-chip def-chip-${k}`}>{k}</span>
 }
 
-// Compact dashboard.
-// Default view: NBI hero + four small metric cards. Each container carries
-// its own formula (symbolic, with colored chips) so the math lives next to
-// the result.
-// Toggleable details: 2×2 adjudication matrix and influence flow.
+// Compact dashboard. Each tile carries its own formula next to its result.
 export default function Dashboard({ counts, metrics }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -122,20 +118,11 @@ function AdjudicationMatrix({ counts }) {
   return (
     <div className="dash-tile">
       <div className="dash-section-label">Adjudication matrix</div>
-      <div className="dash-matrix">
-        <div></div>
-        <div className="dash-matrix-h">ΔD = 1</div>
-        <div className="dash-matrix-h">ΔD = 0</div>
-        <div className="dash-matrix-v">Wrong</div>
-        <Cell code="B"  count={counts.B}  cls="cell-b"  />
-        <Cell code="IR" count={counts.IR} cls="cell-ir" />
-        <div className="dash-matrix-v">Right</div>
-        <Cell code="H"  count={counts.H}  cls="cell-h"  />
-        <Cell code="AR" count={counts.AR} cls="cell-ar" />
-      </div>
+      <AdjMatrixGrid counts={counts} />
       <div className="dash-caption">
-        Each disagreement case sorts into one cell. Rows: clinician initially correct vs.
-        wrong (versus reference standard). Columns: did the clinician change after AI nudge.
+        Each disagreement case sorts into one cell. Y-axis: was the clinician's
+        initial decision correct (vs. reference standard). X-axis: did the
+        clinician change their decision after the AI nudge.
       </div>
       <div className="dash-symbolic dash-symbolic-bordered">
         N<sub>disagree</sub> = <Chip k="B" /> + <Chip k="H" /> + <Chip k="IR" /> + <Chip k="AR" />
@@ -144,11 +131,45 @@ function AdjudicationMatrix({ counts }) {
   )
 }
 
-function Cell({ code, count, cls }) {
+// Reusable matrix grid. When counts is provided, shows numeric counts.
+// When counts is undefined, shows just the colored chips (Definitions tab).
+export function AdjMatrixGrid({ counts }) {
+  const showCounts = counts !== undefined && counts !== null
+  return (
+    <div className="adj-matrix-frame">
+      <div className="adj-matrix-x-title">Decision changed after AI nudge</div>
+      <div className="adj-matrix-body">
+        <div className="adj-matrix-y-title">
+          <span>Initial decision (vs. R)</span>
+        </div>
+        <div className="adj-matrix-grid">
+          <div></div>
+          <div className="adj-matrix-col-hdr">
+            <strong>ΔD = 1</strong>
+            <span className="adj-matrix-col-sub">changed</span>
+          </div>
+          <div className="adj-matrix-col-hdr">
+            <strong>ΔD = 0</strong>
+            <span className="adj-matrix-col-sub">unchanged</span>
+          </div>
+          <div className="adj-matrix-row-hdr"><strong>Wrong</strong><span className="adj-matrix-row-sub">D<sub>i</sub> ≠ R</span></div>
+          <Cell code="B"  count={showCounts ? counts.B  : undefined} cls="cell-b"  caption="Beneficial change" />
+          <Cell code="IR" count={showCounts ? counts.IR : undefined} cls="cell-ir" caption="Inappropriate resistance" />
+          <div className="adj-matrix-row-hdr"><strong>Right</strong><span className="adj-matrix-row-sub">D<sub>i</sub> = R</span></div>
+          <Cell code="H"  count={showCounts ? counts.H  : undefined} cls="cell-h"  caption="Harmful change" />
+          <Cell code="AR" count={showCounts ? counts.AR : undefined} cls="cell-ar" caption="Appropriate resistance" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Cell({ code, count, cls, caption }) {
   return (
     <div className={`matrix-cell ${cls}`}>
-      <div className="matrix-cell-code">{code}</div>
-      <div className="matrix-cell-count">{count}</div>
+      <span className={`def-chip def-chip-${code} matrix-cell-chip`}>{code}</span>
+      {count !== undefined && <div className="matrix-cell-count">{count}</div>}
+      {count === undefined && caption && <div className="matrix-cell-caption">{caption}</div>}
     </div>
   )
 }

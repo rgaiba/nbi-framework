@@ -271,28 +271,82 @@
   transform: rotate(180deg);
 }
 
-.dash-matrix {
-  display: grid;
-  grid-template-columns: 64px 1fr 1fr;
-  gap: 6px;
+/* ── ADJUDICATION MATRIX with axis labels ────────────────────────────── */
+.adj-matrix-frame {
+  display: flex; flex-direction: column;
+  gap: 4px;
   margin-top: 10px;
 }
-.dash-matrix-h {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--txt-3);
-  text-align: center; padding: 4px 2px;
+.adj-matrix-x-title {
+  text-align: center;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--navy);
+  padding-left: 78px; /* offset for y-axis column + row-header column */
 }
-.dash-matrix-v {
-  font-size: 11px; color: var(--txt-2);
-  display: flex; align-items: center;
-  font-weight: 600;
+.adj-matrix-body {
+  display: flex; gap: 8px;
+  align-items: stretch;
+}
+.adj-matrix-y-title {
+  width: 22px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 32px; /* skip the column-headers row */
+}
+.adj-matrix-y-title span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+}
+.adj-matrix-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 56px 1fr 1fr;
+  gap: 6px;
+}
+.adj-matrix-col-hdr {
+  text-align: center;
+  padding: 4px 2px;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.adj-matrix-col-hdr strong {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt);
+  font-weight: 700;
+}
+.adj-matrix-col-sub {
+  font-size: 10px;
+  color: var(--txt-3);
+  font-style: italic;
+}
+.adj-matrix-row-hdr {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--txt-2);
+}
+.adj-matrix-row-hdr strong {
+  font-weight: 700;
+  color: var(--txt);
+  font-size: 12px;
+}
+.adj-matrix-row-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--txt-3);
+  margin-top: 1px;
 }
 
 .matrix-cell {
   position: relative;
   border-radius: 6px;
-  padding: 12px 10px 10px;
-  display: flex; flex-direction: column;
+  padding: 8px 10px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+  align-items: flex-start;
   min-height: 64px;
   border: 1px solid;
 }
@@ -300,26 +354,37 @@
 .matrix-cell.cell-h  { background: #fcebeb; border-color: rgba(226,75,74,0.35); }
 .matrix-cell.cell-ir { background: #faeeda; border-color: rgba(186,117,23,0.35); }
 .matrix-cell.cell-ar { background: #e6f1fb; border-color: rgba(55,138,221,0.35); }
-.matrix-cell-code {
-  font-family: var(--font-serif);
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.04em;
-  margin-bottom: 4px;
+.matrix-cell-chip {
+  /* inherits .def-chip styles; just nudges placement inside the cell. */
+  align-self: flex-start;
 }
-.cell-b  .matrix-cell-code { color: #173404; }
-.cell-h  .matrix-cell-code { color: #501313; }
-.cell-ir .matrix-cell-code { color: #412402; }
-.cell-ar .matrix-cell-code { color: #042c53; }
 .matrix-cell-count {
   font-family: var(--font-mono);
   font-size: 22px; font-weight: 700;
   line-height: 1;
+  margin-top: 2px;
   font-feature-settings: "tnum" 1;
 }
 .cell-b  .matrix-cell-count { color: #173404; }
 .cell-h  .matrix-cell-count { color: #501313; }
 .cell-ir .matrix-cell-count { color: #412402; }
 .cell-ar .matrix-cell-count { color: #042c53; }
+.matrix-cell-caption {
+  font-size: 11px;
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+.cell-b  .matrix-cell-caption { color: #2a5028; }
+.cell-h  .matrix-cell-caption { color: #6a1b1b; }
+.cell-ir .matrix-cell-caption { color: #5a3408; }
+.cell-ar .matrix-cell-caption { color: #1a3868; }
+
+/* On narrow screens drop the rotated y-axis label to save horizontal room */
+@media (max-width: 540px) {
+  .adj-matrix-y-title { display: none; }
+  .adj-matrix-x-title { padding-left: 56px; }
+}
 
 .dash-flow-head {
   display: flex; justify-content: space-between; align-items: baseline;
@@ -464,6 +529,16 @@
 .definitions {
   display: flex; flex-direction: column;
   gap: 14px;
+}
+.def-matrix-box {
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.def-matrix-box .adj-matrix-frame {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 /* Inline colored chip for variables inside formulas. Used in the Definitions
