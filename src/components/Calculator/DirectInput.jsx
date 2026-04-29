@@ -41,13 +41,6 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
         Set the four outcome counts directly. Updates the dashboard live.
       </p>
 
-      <dl className="legend-grid">
-        <dt>B</dt>  <dd>Beneficial change · Wrong → Right</dd>
-        <dt>H</dt>  <dd>Harmful change · Right → Wrong</dd>
-        <dt>IR</dt> <dd>Inappropriate resistance · Wrong → Wrong</dd>
-        <dt>AR</dt> <dd>Appropriate resistance · Right → Right</dd>
-      </dl>
-
       <div className="direct-fields">
         {FIELDS.map(f => (
           <div key={f.k} className={`direct-row ${f.cls}`}>

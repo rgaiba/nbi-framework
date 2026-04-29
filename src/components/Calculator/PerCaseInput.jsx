@@ -118,11 +118,11 @@ export default function PerCaseInput({ applyCounts }) {
         values are set. Click Apply to push the totals to the dashboard.
       </p>
 
-      <dl className="legend-grid">
+      <dl className="legend-grid legend-grid-2col">
         <dt>D<sub>i</sub></dt> <dd>Clinician's initial decision</dd>
         <dt>A</dt>             <dd>AI's recommendation</dd>
         <dt>D<sub>f</sub></dt> <dd>Clinician's final decision</dd>
-        <dt>R</dt>             <dd>Reference standard. All values binary 0/1.</dd>
+        <dt>R</dt>             <dd>Reference standard. Binary 0/1.</dd>
       </dl>
       <div className="legend-note muted">
         Agreement cases (D<sub>i</sub> = A) are adjudicated but excluded from N<sub>disagree</sub>.

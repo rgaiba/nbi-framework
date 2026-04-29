@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { interpretMetric, formatMetric, formatCI } from '../../lib/nbi.js'
 
 // Compact dashboard.
-// Default view: NBI hero + four small metric cards filling the pane height.
+// Default view: NBI hero + four small metric cards.
 // Toggleable details: 2×2 adjudication matrix and influence flow.
 export default function Dashboard({ counts, metrics }) {
   const [showDetails, setShowDetails] = useState(false)
@@ -57,29 +57,26 @@ function NbiHero({ metrics }) {
 }
 
 const SMALL = [
-  { k: 'AIR', name: 'AIR', desc: 'Appropriate Influence Ratio. B / (B + H).' },
-  { k: 'DIR', name: 'DIR', desc: 'Decision Influence Rate. (B + H) / N.' },
-  { k: 'ECR', name: 'ECR', desc: 'Error Correction Rate. B / (B + IR).' },
-  { k: 'EIR', name: 'EIR', desc: 'Error Induction Rate. H / (H + AR).' },
+  { k: 'AIR', name: 'AIR', desc: 'Change quality' },
+  { k: 'DIR', name: 'DIR', desc: 'Overall change rate' },
+  { k: 'ECR', name: 'ECR', desc: 'Errors corrected' },
+  { k: 'EIR', name: 'EIR', desc: 'Errors induced' },
 ]
 
 function SmallMetrics({ metrics }) {
   return (
-    <div className="dash-small-wrap">
-      <div className="dash-small">
-        {SMALL.map(s => (
+    <div className="dash-small">
+      {SMALL.map(s => {
+        const ci = formatCI(s.k, metrics[`${s.k}_CI`])
+        return (
           <div key={s.k} className="dash-small-card">
-            <div className="dash-small-label" title={s.desc}>{s.name}</div>
+            <div className="dash-small-label">{s.name}</div>
             <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
-            <div className="dash-small-ci">{formatCI(s.k, metrics[`${s.k}_CI`])}</div>
+            <div className="dash-small-desc">{s.desc}</div>
+            <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
           </div>
-        ))}
-      </div>
-      <div className="dash-caption">
-        Secondary metrics with 95% confidence intervals (Wilson score).
-        AIR shows change quality; ECR catches algorithm aversion;
-        EIR catches automation bias; DIR is the overall change rate.
-      </div>
+        )
+      })}
     </div>
   )
 }

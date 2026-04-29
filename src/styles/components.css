@@ -184,13 +184,13 @@
   background: var(--surface-2);
   border-radius: var(--radius);
   padding: 14px 14px;
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column; gap: 3px;
 }
 .dash-small-label {
-  font-size: 11px; font-weight: 600;
+  font-size: 11px; font-weight: 700;
   color: var(--txt-3);
-  letter-spacing: 0.04em;
-  cursor: help;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .dash-small-val {
   font-family: var(--font-mono);
@@ -198,12 +198,19 @@
   color: var(--txt);
   font-feature-settings: "tnum" 1;
 }
+.dash-small-desc {
+  font-size: 11px;
+  color: var(--txt-2);
+  font-style: italic;
+  margin-top: 2px;
+}
 .dash-small-ci {
   font-family: var(--font-mono);
   font-size: 10.5px;
   color: var(--txt-3);
   font-feature-settings: "tnum" 1;
   min-height: 14px;
+  margin-top: 2px;
 }
 
 .dash-tile {
@@ -373,7 +380,7 @@
 .calc-panel { display: flex; flex-direction: column; gap: 14px; }
 .calc-panel p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; }
 
-/* ── LEGEND GRID (used in Direct and Per-case tabs) ──────────────────── */
+/* ── LEGEND GRID (used in Per-case tab) ──────────────────────────────── */
 .legend-grid {
   margin: 0;
   padding: 12px 14px;
@@ -386,6 +393,19 @@
   font-size: 11.5px;
   line-height: 1.5;
   align-items: baseline;
+}
+/* Two-column variant: dt/dd pairs auto-flow into a 4-column grid so each
+   row contains two items side by side. Falls back to single column on
+   narrow viewports. */
+.legend-grid-2col {
+  grid-template-columns: auto 1fr auto 1fr;
+  column-gap: 18px;
+}
+@media (max-width: 540px) {
+  .legend-grid-2col {
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+  }
 }
 .legend-grid dt {
   font-family: var(--font-mono);
