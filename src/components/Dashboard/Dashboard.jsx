@@ -83,32 +83,29 @@ function NbiHero({ metrics }) {
   )
 }
 
-// Order: DIR, AIR, ECR, EIR. Secondary cards use inline formulas on their
-// own line so each gets the full card width to render cleanly.
+// Order: DIR, AIR, ECR, EIR. Each formula is split into "LABEL =" on the
+// first line and the body on the second so the longest (DIR) doesn't wrap
+// awkwardly across the chips.
 const SMALL = [
   {
     k: 'DIR',
     expansion: 'Decision Influence Rate',
-    desc: 'Overall change rate',
-    inline: (<>DIR = (<Chip k="B" /> + <Chip k="H" />) / N<sub>disagree</sub> × 100</>),
+    formula: (<>(<Chip k="B" /> + <Chip k="H" />) / N<sub>disagree</sub> × 100</>),
   },
   {
     k: 'AIR',
     expansion: 'Appropriate Influence Ratio',
-    desc: 'Change quality',
-    inline: (<>AIR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="H" />)</>),
+    formula: (<><Chip k="B" /> / (<Chip k="B" /> + <Chip k="H" />)</>),
   },
   {
     k: 'ECR',
     expansion: 'Error Correction Rate',
-    desc: 'Errors corrected',
-    inline: (<>ECR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
+    formula: (<><Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
   },
   {
     k: 'EIR',
     expansion: 'Error Induction Rate',
-    desc: 'Errors induced',
-    inline: (<>EIR = <Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
+    formula: (<><Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
   },
 ]
 
@@ -122,8 +119,11 @@ function SmallMetrics({ metrics }) {
             <div className="dash-small-expansion">{s.expansion}</div>
             <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
             <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
-            <div className="dash-small-formula-inline">{s.inline}</div>
-            <div className="dash-small-desc">{s.desc}</div>
+            <div className="dash-small-formula-inline">
+              <div className="formula-prefix">{s.k} =</div>
+              <div className="formula-body">{s.formula}</div>
+            </div>
+            <div className="dash-small-desc">{interpretMetric(s.k, metrics[s.k])}</div>
           </div>
         )
       })}

@@ -237,6 +237,13 @@
   font-feature-settings: "tnum" 1;
 }
 .dash-small-formula-inline sub { font-size: 0.78em; }
+.dash-small-formula-inline .formula-prefix {
+  font-weight: 600;
+  color: var(--txt);
+}
+.dash-small-formula-inline .formula-body {
+  /* sits on its own line; chips and operators flow inline within */
+}
 .dash-small-desc {
   font-size: 11.5px;
   color: var(--txt-2);
@@ -802,7 +809,8 @@
 
 .cases-actions {
   display: flex; align-items: center; flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  margin: 10px 0;
 }
 .cases-summary {
   font-size: 12px;
@@ -811,8 +819,8 @@
 .cases-summary strong { font-family: var(--font-mono); color: var(--txt); }
 
 .cases-csv {
-  margin-top: 6px;
-  padding: 12px 14px;
+  margin-top: 8px;
+  padding: 14px 16px;
   background: var(--surface-2);
   border-radius: var(--radius);
   border: 1px dashed var(--border);
