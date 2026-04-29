@@ -13,8 +13,7 @@ export default function DefinitionsInput() {
   return (
     <div className="definitions">
       <p className="muted">
-        Variable definitions (all binary 0/1) and the structure of the adjudication
-        matrix. Live values and metric formulas appear in the dashboard.
+        Variable definitions (all binary 0/1) and the structure of the adjudication matrix.
       </p>
 
       <div className="legend-box">
@@ -25,7 +24,7 @@ export default function DefinitionsInput() {
           <dt>R</dt>             <dd>Reference standard</dd>
         </dl>
         <div className="legend-agreement legend-agreement-center">
-          Agreement cases (D<sub>i</sub> = A) offer no incremental value from AI use and therefore are excluded from N<sub>disagree</sub>.
+          Agreement cases (D<sub>i</sub> = A) offer no incremental value from AI use and are therefore excluded from the adjudication matrix.
         </div>
       </div>
 

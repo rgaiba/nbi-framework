@@ -241,13 +241,18 @@
   font-weight: 600;
   color: var(--txt);
 }
-.dash-small-formula-inline .formula-body {
-  /* sits on its own line; chips and operators flow inline within */
+/* Two-line variant: prefix on its own line, body below. Used for DIR. */
+.dash-small-formula-inline.is-two-line .formula-prefix,
+.dash-small-formula-inline.is-two-line .formula-body {
+  display: block;
+}
+.dash-small-formula-inline.is-two-line .formula-prefix {
+  margin-bottom: 4px;
 }
 .dash-small-desc {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--txt-2);
-  font-style: italic;
+  line-height: 1.55;
   margin-top: 14px;
   padding-top: 12px;
   border-top: 1px solid var(--border-soft);
@@ -634,6 +639,7 @@
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px solid var(--border-soft);
+  text-align: center;
 }
 .dash-hero .dash-symbolic {
   margin-top: 10px;

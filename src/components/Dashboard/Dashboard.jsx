@@ -83,29 +83,36 @@ function NbiHero({ metrics }) {
   )
 }
 
-// Order: DIR, AIR, ECR, EIR. Each formula is split into "LABEL =" on the
-// first line and the body on the second so the longest (DIR) doesn't wrap
-// awkwardly across the chips.
+// Order: DIR, AIR, ECR, EIR. Only DIR uses two-line layout (prefix above,
+// body below) because its formula is the only one that doesn't fit on a
+// single line. The rest stay compact on one line.
+// `desc` is a static description of what the metric measures (not what the
+// current value indicates), parallel in tone to the NBI hero's interp line.
 const SMALL = [
   {
     k: 'DIR',
     expansion: 'Decision Influence Rate',
     formula: (<>(<Chip k="B" /> + <Chip k="H" />) / N<sub>disagree</sub> × 100</>),
+    twoLine: true,
+    desc: 'Overall rate of decision change among disagreement cases.',
   },
   {
     k: 'AIR',
     expansion: 'Appropriate Influence Ratio',
     formula: (<><Chip k="B" /> / (<Chip k="B" /> + <Chip k="H" />)</>),
+    desc: 'Proportion of AI-driven decision changes that were beneficial.',
   },
   {
     k: 'ECR',
     expansion: 'Error Correction Rate',
     formula: (<><Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
+    desc: 'Proportion of clinician errors corrected after the AI nudge.',
   },
   {
     k: 'EIR',
     expansion: 'Error Induction Rate',
     formula: (<><Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
+    desc: 'Proportion of correct decisions converted to errors after the AI nudge.',
   },
 ]
 
@@ -119,11 +126,11 @@ function SmallMetrics({ metrics }) {
             <div className="dash-small-expansion">{s.expansion}</div>
             <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
             <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
-            <div className="dash-small-formula-inline">
-              <div className="formula-prefix">{s.k} =</div>
-              <div className="formula-body">{s.formula}</div>
+            <div className={`dash-small-formula-inline ${s.twoLine ? 'is-two-line' : ''}`}>
+              <span className="formula-prefix">{s.k} = </span>
+              <span className="formula-body">{s.formula}</span>
             </div>
-            <div className="dash-small-desc">{interpretMetric(s.k, metrics[s.k])}</div>
+            <div className="dash-small-desc">{s.desc}</div>
           </div>
         )
       })}

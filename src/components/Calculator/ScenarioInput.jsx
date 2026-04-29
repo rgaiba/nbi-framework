@@ -28,7 +28,7 @@ export default function ScenarioInput({ activeId, onLoad }) {
                 </span>
               </div>
               <div className="scenario-meta muted">
-                {s.tagline} · B {s.counts.B} · H {s.counts.H} · IR {s.counts.IR} · AR {s.counts.AR}
+                {s.tagline}
               </div>
             </button>
           )
