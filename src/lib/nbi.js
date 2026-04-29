@@ -189,12 +189,13 @@ export function formatMetric(metric, value) {
   return `${value.toFixed(1)}%`
 }
 
-/** Format a CI tuple {lo, hi} for compact display under a metric value. */
+/** Format a CI tuple {lo, hi} for compact display under a metric value.
+ *  All metrics use the "x to y" form for consistency. */
 export function formatCI(metric, ci) {
   if (!ci) return ''
   if (metric === 'AIR') {
     // AIR is on 0–1 scale; CI tuple is already on that scale.
-    return `(${ci.lo.toFixed(2)}, ${ci.hi.toFixed(2)})`
+    return `(${ci.lo.toFixed(2)} to ${ci.hi.toFixed(2)})`
   }
   // Percentage metrics; CI tuple is in percentage points.
   const sign = (n) => (n > 0 ? '+' : '') + n.toFixed(1)
