@@ -6,7 +6,23 @@ function Chip({ k }) {
   return <span className={`def-chip def-chip-${k}`}>{k}</span>
 }
 
-// Compact dashboard. Each tile carries its own formula next to its result.
+// Render a fraction: numerator stacked over denominator, optional ×100 trailing.
+function Frac({ num, den, mult }) {
+  return (
+    <span className="frac">
+      <span className="frac-stack">
+        <span className="frac-num">{num}</span>
+        <span className="frac-line" />
+        <span className="frac-den">{den}</span>
+      </span>
+      {mult && <span className="frac-mult">{mult}</span>}
+    </span>
+  )
+}
+
+// Compact dashboard. Each tile shows the result on the left and the formula
+// (as a stacked fraction) on the right. A horizontal rule separates the
+// data block from the interpretation block below.
 export default function Dashboard({ counts, metrics }) {
   const [showDetails, setShowDetails] = useState(false)
 
@@ -49,40 +65,56 @@ function NbiHero({ metrics }) {
   return (
     <div className="dash-hero">
       <div className="dash-hero-label">Net beneficial influence</div>
-      <div className={`dash-hero-val ${cls}`}>{display}</div>
-      {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
-      <div className="dash-symbolic">
-        NBI = (<Chip k="B" /> − <Chip k="H" />) / N<sub>disagree</sub> × 100
+      <div className="dash-hero-body">
+        <div className="dash-hero-left">
+          <div className={`dash-hero-val ${cls}`}>{display}</div>
+          {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
+        </div>
+        <div className="dash-hero-right">
+          <Frac
+            num={<><Chip k="B" /> − <Chip k="H" /></>}
+            den={<>N<sub>disagree</sub></>}
+            mult="× 100"
+          />
+        </div>
       </div>
       <div className="dash-hero-interp">{interp}</div>
     </div>
   )
 }
 
+// Order: DIR, AIR, ECR, EIR.
 const SMALL = [
-  {
-    k: 'AIR',
-    expansion: 'Appropriate Influence Ratio',
-    desc: 'Change quality',
-    formula: (<>AIR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="H" />)</>),
-  },
   {
     k: 'DIR',
     expansion: 'Decision Influence Rate',
     desc: 'Overall change rate',
-    formula: (<>DIR = (<Chip k="B" /> + <Chip k="H" />) / N<sub>disagree</sub> × 100</>),
+    num: (<><Chip k="B" /> + <Chip k="H" /></>),
+    den: (<>N<sub>disagree</sub></>),
+    mult: '× 100',
+  },
+  {
+    k: 'AIR',
+    expansion: 'Appropriate Influence Ratio',
+    desc: 'Change quality',
+    num: (<><Chip k="B" /></>),
+    den: (<><Chip k="B" /> + <Chip k="H" /></>),
   },
   {
     k: 'ECR',
     expansion: 'Error Correction Rate',
     desc: 'Errors corrected',
-    formula: (<>ECR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
+    num: (<><Chip k="B" /></>),
+    den: (<><Chip k="B" /> + <Chip k="IR" /></>),
+    mult: '× 100',
   },
   {
     k: 'EIR',
     expansion: 'Error Induction Rate',
     desc: 'Errors induced',
-    formula: (<>EIR = <Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
+    num: (<><Chip k="H" /></>),
+    den: (<><Chip k="H" /> + <Chip k="AR" /></>),
+    mult: '× 100',
   },
 ]
 
@@ -94,9 +126,15 @@ function SmallMetrics({ metrics }) {
         return (
           <div key={s.k} className="dash-small-card">
             <div className="dash-small-expansion">{s.expansion}</div>
-            <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
-            <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
-            <div className="dash-small-formula">{s.formula}</div>
+            <div className="dash-small-body">
+              <div className="dash-small-left">
+                <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
+                <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
+              </div>
+              <div className="dash-small-right">
+                <Frac num={s.num} den={s.den} mult={s.mult} />
+              </div>
+            </div>
             <div className="dash-small-desc">{s.desc}</div>
           </div>
         )
