@@ -83,38 +83,32 @@ function NbiHero({ metrics }) {
   )
 }
 
-// Order: DIR, AIR, ECR, EIR.
+// Order: DIR, AIR, ECR, EIR. Secondary cards use inline formulas on their
+// own line so each gets the full card width to render cleanly.
 const SMALL = [
   {
     k: 'DIR',
     expansion: 'Decision Influence Rate',
     desc: 'Overall change rate',
-    num: (<><Chip k="B" /> + <Chip k="H" /></>),
-    den: (<>N<sub>disagree</sub></>),
-    mult: '× 100',
+    inline: (<>DIR = (<Chip k="B" /> + <Chip k="H" />) / N<sub>disagree</sub> × 100</>),
   },
   {
     k: 'AIR',
     expansion: 'Appropriate Influence Ratio',
     desc: 'Change quality',
-    num: (<><Chip k="B" /></>),
-    den: (<><Chip k="B" /> + <Chip k="H" /></>),
+    inline: (<>AIR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="H" />)</>),
   },
   {
     k: 'ECR',
     expansion: 'Error Correction Rate',
     desc: 'Errors corrected',
-    num: (<><Chip k="B" /></>),
-    den: (<><Chip k="B" /> + <Chip k="IR" /></>),
-    mult: '× 100',
+    inline: (<>ECR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
   },
   {
     k: 'EIR',
     expansion: 'Error Induction Rate',
     desc: 'Errors induced',
-    num: (<><Chip k="H" /></>),
-    den: (<><Chip k="H" /> + <Chip k="AR" /></>),
-    mult: '× 100',
+    inline: (<>EIR = <Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
   },
 ]
 
@@ -126,15 +120,9 @@ function SmallMetrics({ metrics }) {
         return (
           <div key={s.k} className="dash-small-card">
             <div className="dash-small-expansion">{s.expansion}</div>
-            <div className="dash-small-body">
-              <div className="dash-small-left">
-                <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
-                <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
-              </div>
-              <div className="dash-small-right">
-                <Frac num={s.num} den={s.den} mult={s.mult} />
-              </div>
-            </div>
+            <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
+            <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
+            <div className="dash-small-formula-inline">{s.inline}</div>
             <div className="dash-small-desc">{s.desc}</div>
           </div>
         )
