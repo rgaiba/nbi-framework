@@ -116,19 +116,8 @@ export default function PerCaseInput({ applyCounts }) {
       <p className="muted">
         Add cases one by one. Each row is auto-classified as soon as all four
         values are set. Click Apply to push the totals to the dashboard.
+        Variable definitions are in the Definitions tab.
       </p>
-
-      <div className="legend-box">
-        <dl className="legend-grid legend-grid-2col">
-          <dt>D<sub>i</sub></dt> <dd>Clinician's initial decision</dd>
-          <dt>A</dt>             <dd>AI's recommendation</dd>
-          <dt>D<sub>f</sub></dt> <dd>Clinician's final decision</dd>
-          <dt>R</dt>             <dd>Reference standard. Binary 0/1.</dd>
-        </dl>
-        <div className="legend-agreement">
-          Agreement cases (D<sub>i</sub> = A) are adjudicated but excluded from N<sub>disagree</sub>.
-        </div>
-      </div>
 
       <div className="cases-table-wrap">
         <table className="cases-table">

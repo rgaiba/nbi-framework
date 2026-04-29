@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
+import DefinitionsInput from './DefinitionsInput.jsx'
+import PerCaseInput from './PerCaseInput.jsx'
 import DirectInput from './DirectInput.jsx'
 import ScenarioInput from './ScenarioInput.jsx'
-import PerCaseInput from './PerCaseInput.jsx'
 
 const TABS = [
-  { id: 'cases',     label: 'Per-case' },
-  { id: 'direct',    label: 'Direct' },
-  { id: 'scenarios', label: 'Scenarios' },
+  { id: 'definitions', label: 'Definitions' },
+  { id: 'cases',       label: 'Per-case' },
+  { id: 'direct',      label: 'Direct' },
+  { id: 'scenarios',   label: 'Scenarios' },
 ]
 
 export default function Calculator({
   counts, updateCounts, loadScenario, activeScenarioId, setActiveScenarioId,
 }) {
-  const [tab, setTab] = useState('cases')
+  const [tab, setTab] = useState('definitions')
 
   return (
     <div className="calc">
@@ -31,6 +33,12 @@ export default function Calculator({
       </div>
 
       <div className="calc-panel">
+        {tab === 'definitions' && <DefinitionsInput />}
+        {tab === 'cases' && (
+          <PerCaseInput
+            applyCounts={(next) => { updateCounts(next); setActiveScenarioId(null) }}
+          />
+        )}
         {tab === 'direct' && (
           <DirectInput
             counts={counts}
@@ -40,11 +48,6 @@ export default function Calculator({
         )}
         {tab === 'scenarios' && (
           <ScenarioInput activeId={activeScenarioId} onLoad={loadScenario} />
-        )}
-        {tab === 'cases' && (
-          <PerCaseInput
-            applyCounts={(next) => { updateCounts(next); setActiveScenarioId(null) }}
-          />
         )}
       </div>
     </div>
