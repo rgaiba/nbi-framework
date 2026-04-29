@@ -38,9 +38,6 @@ export default function App() {
         <div className="container">
           {view === 'calculator' ? (
             <div className="two-pane">
-              <section className="pane pane-dashboard" aria-label="Live metrics dashboard">
-                <Dashboard counts={counts} metrics={metrics} />
-              </section>
               <section className="pane pane-calculator" aria-label="Calculator inputs">
                 <Calculator
                   counts={counts}
@@ -49,6 +46,9 @@ export default function App() {
                   activeScenarioId={activeScenarioId}
                   setActiveScenarioId={setActiveScenarioId}
                 />
+              </section>
+              <section className="pane pane-dashboard" aria-label="Live metrics dashboard">
+                <Dashboard counts={counts} metrics={metrics} />
               </section>
             </div>
           ) : (

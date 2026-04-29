@@ -4,15 +4,15 @@ import ScenarioInput from './ScenarioInput.jsx'
 import PerCaseInput from './PerCaseInput.jsx'
 
 const TABS = [
+  { id: 'cases',     label: 'Per-case' },
   { id: 'direct',    label: 'Direct' },
   { id: 'scenarios', label: 'Scenarios' },
-  { id: 'cases',     label: 'Per-case' },
 ]
 
 export default function Calculator({
   counts, updateCounts, loadScenario, activeScenarioId, setActiveScenarioId,
 }) {
-  const [tab, setTab] = useState('direct')
+  const [tab, setTab] = useState('cases')
 
   return (
     <div className="calc">

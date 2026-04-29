@@ -85,30 +85,35 @@
 }
 
 /* ── TWO-PANE LAYOUT ─────────────────────────────────────────────────── */
+/*
+  Mobile (single column): calculator on top, dashboard below (DOM order).
+  Desktop (two columns):  calculator left, dashboard right (same DOM order).
+  No order flip is required between viewports.
+*/
 .two-pane {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(20px, 3vw, 32px);
 }
 .pane { min-width: 0; display: flex; flex-direction: column; }
-.pane-calculator { order: 1; }
-.pane-dashboard  { order: 2; }
 
 @media (min-width: 880px) {
   .two-pane {
     grid-template-columns: 1fr 1fr;
     gap: clamp(28px, 3.5vw, 48px);
-    align-items: stretch;
+    align-items: start;
   }
-  .pane-dashboard  { order: 1; }
-  .pane-calculator { order: 2; }
 }
 
 /* ── DASHBOARD ───────────────────────────────────────────────────────── */
+/*
+  Compact natural-height layout. Sections take their natural sizes; the small
+  metrics block does NOT stretch to match the calculator pane. The dashboard
+  ends up the same height regardless of which input mode is open on the left.
+*/
 .dashboard {
   display: flex; flex-direction: column;
   gap: 16px;
-  height: 100%;
 }
 .dash-section-label {
   font-size: 10.5px; font-weight: 700;
@@ -163,21 +168,16 @@
   margin-top: 8px;
 }
 
-/* Small-metrics wrap fills the remaining vertical space in the dashboard pane.
-   When details are hidden, this stretches the four cards to match the height
-   of the calculator pane. When details are shown, the wrap shrinks to allow
-   matrix + flow space below. */
+/* Small-metrics wrap takes its natural height. The four cards have a fixed
+   visual size that stays consistent across all input modes. */
 .dash-small-wrap {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
 }
 .dash-small {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  flex: 1;
 }
 @media (min-width: 1180px) { .dash-small { grid-template-columns: repeat(4, 1fr); } }
 .dash-small-card {
@@ -185,7 +185,6 @@
   border-radius: var(--radius);
   padding: 14px 14px;
   display: flex; flex-direction: column; gap: 4px;
-  justify-content: center;
 }
 .dash-small-label {
   font-size: 11px; font-weight: 600;
@@ -219,8 +218,7 @@
 }
 
 .dash-toggle {
-  margin-top: 4px;
-  flex-shrink: 0;
+  margin-top: 2px;
   display: flex; align-items: center; justify-content: center; gap: 8px;
   padding: 10px 16px;
   background: var(--surface-2);
