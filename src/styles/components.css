@@ -143,10 +143,6 @@
   color: var(--txt-3);
   margin-bottom: 8px;
 }
-.dash-hero-row {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  gap: 6px 14px;
-}
 .dash-hero-val {
   font-family: var(--font-mono);
   font-size: clamp(32px, 4.2vw, 48px);
@@ -159,12 +155,6 @@
 .dash-hero-val.val-pos  { color: var(--green); }
 .dash-hero-val.val-neg  { color: var(--red); }
 .dash-hero-val.val-zero { color: var(--txt-2); }
-.dash-hero-formula {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--txt-3);
-  font-feature-settings: "tnum" 1;
-}
 .dash-hero-ci {
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -191,40 +181,20 @@
   padding: 14px 16px;
   display: flex; flex-direction: column; gap: 3px;
 }
-.dash-small-mnemonic {
-  font-size: 11px; font-weight: 700;
-  color: var(--navy);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
 .dash-small-expansion {
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--txt);
   line-height: 1.3;
+  margin-bottom: 6px;
 }
-.dash-small-formula {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--txt-2);
-  line-height: 1.6;
-  font-feature-settings: "tnum" 1;
-  margin: 4px 0 6px;
-}
-.dash-small-formula sub { font-size: 0.78em; }
 .dash-small-val {
   font-family: var(--font-mono);
-  font-size: 22px; font-weight: 700;
+  font-size: 24px; font-weight: 700;
   color: var(--txt);
   letter-spacing: -0.005em;
   font-feature-settings: "tnum" 1;
   line-height: 1;
-}
-.dash-small-desc {
-  font-size: 11px;
-  color: var(--txt-2);
-  font-style: italic;
-  margin-top: 4px;
 }
 .dash-small-ci {
   font-family: var(--font-mono);
@@ -232,7 +202,24 @@
   color: var(--txt-3);
   font-feature-settings: "tnum" 1;
   min-height: 14px;
-  margin-top: 2px;
+  margin-top: 4px;
+}
+.dash-small-formula {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-2);
+  line-height: 1.6;
+  font-feature-settings: "tnum" 1;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-soft);
+}
+.dash-small-formula sub { font-size: 0.78em; }
+.dash-small-desc {
+  font-size: 11px;
+  color: var(--txt-2);
+  font-style: italic;
+  margin-top: 4px;
 }
 
 .dash-tile {

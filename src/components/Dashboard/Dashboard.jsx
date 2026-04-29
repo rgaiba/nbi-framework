@@ -12,7 +12,7 @@ export default function Dashboard({ counts, metrics }) {
 
   return (
     <div className="dashboard">
-      <NbiHero counts={counts} metrics={metrics} />
+      <NbiHero metrics={metrics} />
       <SmallMetrics metrics={metrics} />
 
       {showDetails && (
@@ -39,30 +39,22 @@ export default function Dashboard({ counts, metrics }) {
   )
 }
 
-function NbiHero({ counts, metrics }) {
+function NbiHero({ metrics }) {
   const v = metrics.NBI
   const interp = interpretMetric('NBI', v)
   const cls = v === null ? '' : v > 0 ? 'val-pos' : v < 0 ? 'val-neg' : 'val-zero'
   const display = v === null ? 'n/a' : `${v > 0 ? '+' : ''}${v.toFixed(1)}%`
   const ci = formatCI('NBI', metrics.NBI_CI)
-  const N = metrics.Ndisagree
 
   return (
     <div className="dash-hero">
       <div className="dash-hero-label">Net beneficial influence</div>
-      <div className="dash-hero-row">
-        <div className={`dash-hero-val ${cls}`}>{display}</div>
-        {N > 0 && (
-          <div className="dash-hero-formula" aria-label="Numeric breakdown">
-            = ({counts.B} − {counts.H}) / {N} × 100
-          </div>
-        )}
-      </div>
+      <div className={`dash-hero-val ${cls}`}>{display}</div>
       {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
-      <div className="dash-hero-interp">{interp}</div>
       <div className="dash-symbolic">
         NBI = (<Chip k="B" /> − <Chip k="H" />) / N<sub>disagree</sub> × 100
       </div>
+      <div className="dash-hero-interp">{interp}</div>
     </div>
   )
 }
@@ -101,12 +93,11 @@ function SmallMetrics({ metrics }) {
         const ci = formatCI(s.k, metrics[`${s.k}_CI`])
         return (
           <div key={s.k} className="dash-small-card">
-            <div className="dash-small-mnemonic">{s.k}</div>
             <div className="dash-small-expansion">{s.expansion}</div>
-            <div className="dash-small-formula">{s.formula}</div>
             <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
-            <div className="dash-small-desc">{s.desc}</div>
             <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
+            <div className="dash-small-formula">{s.formula}</div>
+            <div className="dash-small-desc">{s.desc}</div>
           </div>
         )
       })}
