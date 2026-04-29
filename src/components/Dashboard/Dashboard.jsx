@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { interpretMetric, formatMetric, formatCI } from '../../lib/nbi.js'
 
 // Compact dashboard.
-// Default view: NBI hero + four small metric cards.
+// Default view: NBI hero + four small metric cards (mnemonic + full name + value).
 // Toggleable details: 2×2 adjudication matrix and influence flow.
 export default function Dashboard({ counts, metrics }) {
   const [showDetails, setShowDetails] = useState(false)
 
   return (
     <div className="dashboard">
-      <NbiHero metrics={metrics} />
+      <NbiHero counts={counts} metrics={metrics} />
       <SmallMetrics metrics={metrics} />
 
       {showDetails && (
@@ -36,31 +36,36 @@ export default function Dashboard({ counts, metrics }) {
   )
 }
 
-function NbiHero({ metrics }) {
+function NbiHero({ counts, metrics }) {
   const v = metrics.NBI
   const interp = interpretMetric('NBI', v)
   const cls = v === null ? '' : v > 0 ? 'val-pos' : v < 0 ? 'val-neg' : 'val-zero'
   const display = v === null ? 'n/a' : `${v > 0 ? '+' : ''}${v.toFixed(1)}%`
   const ci = formatCI('NBI', metrics.NBI_CI)
+  const N = metrics.Ndisagree
+
   return (
     <div className="dash-hero">
       <div className="dash-hero-label">Net beneficial influence</div>
-      <div className={`dash-hero-val ${cls}`}>{display}</div>
+      <div className="dash-hero-row">
+        <div className={`dash-hero-val ${cls}`}>{display}</div>
+        {N > 0 && (
+          <div className="dash-hero-formula" aria-label="Formula breakdown">
+            = ({counts.B} − {counts.H}) / {N} × 100
+          </div>
+        )}
+      </div>
       {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
       <div className="dash-hero-interp">{interp}</div>
-      <div className="dash-caption">
-        Primary metric. Net direction of AI influence on the disagreement subset.
-        Formula: (B − H) / N<sub>disagree</sub> × 100.
-      </div>
     </div>
   )
 }
 
 const SMALL = [
-  { k: 'AIR', name: 'AIR', desc: 'Change quality' },
-  { k: 'DIR', name: 'DIR', desc: 'Overall change rate' },
-  { k: 'ECR', name: 'ECR', desc: 'Errors corrected' },
-  { k: 'EIR', name: 'EIR', desc: 'Errors induced' },
+  { k: 'AIR', expansion: 'Appropriate Influence Ratio', desc: 'Change quality' },
+  { k: 'DIR', expansion: 'Decision Influence Rate',     desc: 'Overall change rate' },
+  { k: 'ECR', expansion: 'Error Correction Rate',       desc: 'Errors corrected' },
+  { k: 'EIR', expansion: 'Error Induction Rate',        desc: 'Errors induced' },
 ]
 
 function SmallMetrics({ metrics }) {
@@ -70,7 +75,8 @@ function SmallMetrics({ metrics }) {
         const ci = formatCI(s.k, metrics[`${s.k}_CI`])
         return (
           <div key={s.k} className="dash-small-card">
-            <div className="dash-small-label">{s.name}</div>
+            <div className="dash-small-mnemonic">{s.k}</div>
+            <div className="dash-small-expansion">{s.expansion}</div>
             <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
             <div className="dash-small-desc">{s.desc}</div>
             <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>

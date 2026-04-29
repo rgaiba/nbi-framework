@@ -143,6 +143,10 @@
   color: var(--txt-3);
   margin-bottom: 8px;
 }
+.dash-hero-row {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 6px 14px;
+}
 .dash-hero-val {
   font-family: var(--font-mono);
   font-size: clamp(32px, 4.2vw, 48px);
@@ -155,6 +159,12 @@
 .dash-hero-val.val-pos  { color: var(--green); }
 .dash-hero-val.val-neg  { color: var(--red); }
 .dash-hero-val.val-zero { color: var(--txt-2); }
+.dash-hero-formula {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--txt-3);
+  font-feature-settings: "tnum" 1;
+}
 .dash-hero-ci {
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -168,41 +178,45 @@
   margin-top: 8px;
 }
 
-/* Small-metrics wrap takes its natural height. The four cards have a fixed
-   visual size that stays consistent across all input modes. */
-.dash-small-wrap {
-  display: flex;
-  flex-direction: column;
-}
+/* Small-metrics cards: always 2x2 grid so each card has room for the
+   abbreviation, full name (expansion), value, brief interpretation, and CI. */
 .dash-small {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
-@media (min-width: 1180px) { .dash-small { grid-template-columns: repeat(4, 1fr); } }
 .dash-small-card {
   background: var(--surface-2);
   border-radius: var(--radius);
-  padding: 14px 14px;
+  padding: 14px 16px;
   display: flex; flex-direction: column; gap: 3px;
 }
-.dash-small-label {
+.dash-small-mnemonic {
   font-size: 11px; font-weight: 700;
-  color: var(--txt-3);
-  letter-spacing: 0.06em;
+  color: var(--navy);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+.dash-small-expansion {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--txt);
+  line-height: 1.3;
+  margin-bottom: 4px;
 }
 .dash-small-val {
   font-family: var(--font-mono);
-  font-size: 20px; font-weight: 700;
+  font-size: 22px; font-weight: 700;
   color: var(--txt);
+  letter-spacing: -0.005em;
   font-feature-settings: "tnum" 1;
+  line-height: 1;
 }
 .dash-small-desc {
   font-size: 11px;
   color: var(--txt-2);
   font-style: italic;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 .dash-small-ci {
   font-family: var(--font-mono);
@@ -380,13 +394,18 @@
 .calc-panel { display: flex; flex-direction: column; gap: 14px; }
 .calc-panel p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; }
 
-/* ── LEGEND GRID (used in Per-case tab) ──────────────────────────────── */
-.legend-grid {
-  margin: 0;
+/* ── LEGEND BOX (used in Per-case tab) ───────────────────────────────── */
+/* The outer box provides padding, background, and border. The legend grid
+   inside is transparent so they share the container. The agreement note
+   sits inside the same box, in dark red, separated by a hairline rule. */
+.legend-box {
   padding: 12px 14px;
   background: var(--surface-2);
   border-radius: var(--radius);
   border: 1px solid var(--border-soft);
+}
+.legend-grid {
+  margin: 0;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 6px 14px;
@@ -395,8 +414,7 @@
   align-items: baseline;
 }
 /* Two-column variant: dt/dd pairs auto-flow into a 4-column grid so each
-   row contains two items side by side. Falls back to single column on
-   narrow viewports. */
+   row contains two items side by side. Falls back to single column on narrow viewports. */
 .legend-grid-2col {
   grid-template-columns: auto 1fr auto 1fr;
   column-gap: 18px;
@@ -420,12 +438,16 @@
   margin: 0;
   color: var(--txt-2);
 }
-.legend-note {
-  font-size: 11px;
+.legend-agreement {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+  font-size: 11.5px;
   line-height: 1.55;
-  padding: 0 14px;
+  color: #501313;
+  font-weight: 500;
 }
-.legend-note sub { font-size: 0.78em; }
+.legend-agreement sub { font-size: 0.78em; }
 
 /* ── DIRECT INPUT ────────────────────────────────────────────────────── */
 .direct-fields {
