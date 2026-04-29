@@ -1,15 +1,20 @@
 import React from 'react'
 import { AdjMatrixGrid } from '../Dashboard/Dashboard.jsx'
 
+// Inline colored variable chip used in the N_disagree formula.
+function Chip({ k }) {
+  return <span className={`def-chip def-chip-${k}`}>{k}</span>
+}
+
 // Definitions tab: variable legend, then the adjudication matrix structure
-// (no counts, just the four classes shown as chips). Helps users see how
-// B / H / IR / AR are derived from the two binary axes.
+// (no counts, just the four classes shown as chips), and the N_disagree
+// composition formula. Live values appear in the dashboard.
 export default function DefinitionsInput() {
   return (
     <div className="definitions">
       <p className="muted">
         Variable definitions and the structure of the adjudication matrix.
-        Live values and formulas appear in the dashboard.
+        Live values and metric formulas appear in the dashboard.
       </p>
 
       <div className="legend-box">
@@ -25,13 +30,10 @@ export default function DefinitionsInput() {
       </div>
 
       <div className="def-matrix-box">
-        <div className="def-section-label">Adjudication matrix</div>
+        <div className="dash-section-label">Adjudication matrix</div>
         <AdjMatrixGrid />
-        <div className="def-meaning">
-          Each disagreement case is classified by two binary axes. The Y-axis
-          asks whether the clinician's initial decision matched the reference
-          standard. The X-axis asks whether the clinician changed their decision
-          after seeing the AI's recommendation.
+        <div className="dash-symbolic dash-symbolic-bordered">
+          N<sub>disagree</sub> = <Chip k="B" /> + <Chip k="H" /> + <Chip k="IR" /> + <Chip k="AR" />
         </div>
       </div>
     </div>

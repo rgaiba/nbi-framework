@@ -119,14 +119,6 @@ function AdjudicationMatrix({ counts }) {
     <div className="dash-tile">
       <div className="dash-section-label">Adjudication matrix</div>
       <AdjMatrixGrid counts={counts} />
-      <div className="dash-caption">
-        Each disagreement case sorts into one cell. Y-axis: was the clinician's
-        initial decision correct (vs. reference standard). X-axis: did the
-        clinician change their decision after the AI nudge.
-      </div>
-      <div className="dash-symbolic dash-symbolic-bordered">
-        N<sub>disagree</sub> = <Chip k="B" /> + <Chip k="H" /> + <Chip k="IR" /> + <Chip k="AR" />
-      </div>
     </div>
   )
 }
@@ -137,20 +129,20 @@ export function AdjMatrixGrid({ counts }) {
   const showCounts = counts !== undefined && counts !== null
   return (
     <div className="adj-matrix-frame">
-      <div className="adj-matrix-x-title">Decision changed after AI nudge</div>
+      <div className="adj-matrix-x-title">Clinician decision after AI recommendation</div>
       <div className="adj-matrix-body">
         <div className="adj-matrix-y-title">
-          <span>Initial decision (vs. R)</span>
+          <span>Initial decision</span>
         </div>
         <div className="adj-matrix-grid">
           <div></div>
           <div className="adj-matrix-col-hdr">
-            <strong>ΔD = 1</strong>
-            <span className="adj-matrix-col-sub">changed</span>
+            <strong>Changed</strong>
+            <span className="adj-matrix-col-sub">D<sub>f</sub> ≠ D<sub>i</sub></span>
           </div>
           <div className="adj-matrix-col-hdr">
-            <strong>ΔD = 0</strong>
-            <span className="adj-matrix-col-sub">unchanged</span>
+            <strong>Unchanged</strong>
+            <span className="adj-matrix-col-sub">D<sub>f</sub> = D<sub>i</sub></span>
           </div>
           <div className="adj-matrix-row-hdr"><strong>Wrong</strong><span className="adj-matrix-row-sub">D<sub>i</sub> ≠ R</span></div>
           <Cell code="B"  count={showCounts ? counts.B  : undefined} cls="cell-b"  caption="Beneficial change" />
