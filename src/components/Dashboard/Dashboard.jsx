@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
 import { interpretMetric, formatMetric, formatCI } from '../../lib/nbi.js'
 
+// Inline colored variable chip used in formulas. Same palette as class-pill.
+function Chip({ k }) {
+  return <span className={`def-chip def-chip-${k}`}>{k}</span>
+}
+
 // Compact dashboard.
-// Default view: NBI hero + four small metric cards (mnemonic + full name + value).
+// Default view: NBI hero + four small metric cards. Each container carries
+// its own formula (symbolic, with colored chips) so the math lives next to
+// the result.
 // Toggleable details: 2×2 adjudication matrix and influence flow.
 export default function Dashboard({ counts, metrics }) {
   const [showDetails, setShowDetails] = useState(false)
@@ -50,22 +57,45 @@ function NbiHero({ counts, metrics }) {
       <div className="dash-hero-row">
         <div className={`dash-hero-val ${cls}`}>{display}</div>
         {N > 0 && (
-          <div className="dash-hero-formula" aria-label="Formula breakdown">
+          <div className="dash-hero-formula" aria-label="Numeric breakdown">
             = ({counts.B} − {counts.H}) / {N} × 100
           </div>
         )}
       </div>
       {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
       <div className="dash-hero-interp">{interp}</div>
+      <div className="dash-symbolic">
+        NBI = (<Chip k="B" /> − <Chip k="H" />) / N<sub>disagree</sub> × 100
+      </div>
     </div>
   )
 }
 
 const SMALL = [
-  { k: 'AIR', expansion: 'Appropriate Influence Ratio', desc: 'Change quality' },
-  { k: 'DIR', expansion: 'Decision Influence Rate',     desc: 'Overall change rate' },
-  { k: 'ECR', expansion: 'Error Correction Rate',       desc: 'Errors corrected' },
-  { k: 'EIR', expansion: 'Error Induction Rate',        desc: 'Errors induced' },
+  {
+    k: 'AIR',
+    expansion: 'Appropriate Influence Ratio',
+    desc: 'Change quality',
+    formula: (<>AIR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="H" />)</>),
+  },
+  {
+    k: 'DIR',
+    expansion: 'Decision Influence Rate',
+    desc: 'Overall change rate',
+    formula: (<>DIR = (<Chip k="B" /> + <Chip k="H" />) / N<sub>disagree</sub> × 100</>),
+  },
+  {
+    k: 'ECR',
+    expansion: 'Error Correction Rate',
+    desc: 'Errors corrected',
+    formula: (<>ECR = <Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
+  },
+  {
+    k: 'EIR',
+    expansion: 'Error Induction Rate',
+    desc: 'Errors induced',
+    formula: (<>EIR = <Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
+  },
 ]
 
 function SmallMetrics({ metrics }) {
@@ -77,6 +107,7 @@ function SmallMetrics({ metrics }) {
           <div key={s.k} className="dash-small-card">
             <div className="dash-small-mnemonic">{s.k}</div>
             <div className="dash-small-expansion">{s.expansion}</div>
+            <div className="dash-small-formula">{s.formula}</div>
             <div className="dash-small-val">{formatMetric(s.k, metrics[s.k])}</div>
             <div className="dash-small-desc">{s.desc}</div>
             <div className="dash-small-ci">{ci ? `95% CI ${ci}` : ''}</div>
@@ -105,6 +136,9 @@ function AdjudicationMatrix({ counts }) {
       <div className="dash-caption">
         Each disagreement case sorts into one cell. Rows: clinician initially correct vs.
         wrong (versus reference standard). Columns: did the clinician change after AI nudge.
+      </div>
+      <div className="dash-symbolic dash-symbolic-bordered">
+        N<sub>disagree</sub> = <Chip k="B" /> + <Chip k="H" /> + <Chip k="IR" /> + <Chip k="AR" />
       </div>
     </div>
   )

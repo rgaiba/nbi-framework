@@ -202,8 +202,16 @@
   font-weight: 600;
   color: var(--txt);
   line-height: 1.3;
-  margin-bottom: 4px;
 }
+.dash-small-formula {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-2);
+  line-height: 1.6;
+  font-feature-settings: "tnum" 1;
+  margin: 4px 0 6px;
+}
+.dash-small-formula sub { font-size: 0.78em; }
 .dash-small-val {
   font-family: var(--font-mono);
   font-size: 22px; font-weight: 700;
@@ -457,42 +465,9 @@
   display: flex; flex-direction: column;
   gap: 14px;
 }
-.def-section {
-  display: flex; flex-direction: column;
-  gap: 4px;
-  padding: 12px 14px;
-  background: var(--surface-2);
-  border-radius: var(--radius);
-  border: 1px solid var(--border-soft);
-}
-.def-section-label {
-  font-size: 10.5px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--navy);
-}
-.def-secondary-header {
-  margin-top: 4px;
-  padding: 0 4px;
-}
-.def-formula {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--txt);
-  letter-spacing: -0.005em;
-  line-height: 1.7;
-  font-feature-settings: "tnum" 1;
-}
-.def-formula sub { font-size: 0.75em; }
-.def-meaning {
-  font-size: 11.5px;
-  font-style: italic;
-  color: var(--txt-2);
-  line-height: 1.5;
-  margin-top: 2px;
-}
 
-/* Inline colored chip for variables inside formulas. */
+/* Inline colored chip for variables inside formulas. Used in the Definitions
+   tab and inside dashboard formula lines. */
 .def-chip {
   display: inline-block;
   font-family: var(--font-mono);
@@ -510,6 +485,27 @@
 .def-chip-H  { background: #fcebeb; color: #501313; border-color: rgba(226,75,74,0.4); }
 .def-chip-IR { background: #faeeda; color: #412402; border-color: rgba(186,117,23,0.4); }
 .def-chip-AR { background: #e6f1fb; color: #042c53; border-color: rgba(55,138,221,0.4); }
+
+/* Symbolic formula line used inside dashboard tiles (NBI hero, matrix). */
+.dash-symbolic {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--txt-2);
+  line-height: 1.7;
+  font-feature-settings: "tnum" 1;
+}
+.dash-symbolic sub { font-size: 0.78em; }
+.dash-symbolic-bordered {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+.dash-hero .dash-symbolic {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
 
 /* ── DIRECT INPUT ────────────────────────────────────────────────────── */
 .direct-fields {
