@@ -1,0 +1,231 @@
+/* =============================================================================
+   CALCULATOR
+   Outer card, tabs, and tab-specific content (definitions, direct, per-case).
+============================================================================= */
+
+.calc {
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 16px 16px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.calc-tabs {
+  display: flex; gap: 3px;
+  background: var(--surface-2);
+  padding: 3px;
+  border-radius: var(--radius);
+}
+.calc-tab {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--txt-2);
+  background: transparent;
+  border-radius: 5px;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.calc-tab:hover { color: var(--navy); }
+.calc-tab.is-active {
+  background: white;
+  color: var(--navy);
+  box-shadow: var(--shadow-sm);
+}
+
+.calc-panel { display: flex; flex-direction: column; gap: 14px; }
+.calc-panel p { font-size: var(--fs-sm); line-height: 1.55; margin: 0; }
+
+/* ── Definitions tab ─────────────────────────────────────────────────── */
+.definitions {
+  display: flex; flex-direction: column;
+  gap: 14px;
+}
+.def-matrix-box {
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.def-matrix-box .adj-matrix-frame {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* ── Direct tab ──────────────────────────────────────────────────────── */
+.direct-fields {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.direct-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid;
+}
+.direct-row.field-b  { background: #eaf3de; border-color: rgba(99,153,34,0.30); }
+.direct-row.field-h  { background: #fcebeb; border-color: rgba(226,75,74,0.30); }
+.direct-row.field-ir { background: #faeeda; border-color: rgba(186,117,23,0.30); }
+.direct-row.field-ar { background: #e6f1fb; border-color: rgba(55,138,221,0.30); }
+.direct-meta { flex: 1; min-width: 0; }
+.direct-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600;
+}
+.field-b  .direct-label-text { color: #173404; }
+.field-h  .direct-label-text { color: #501313; }
+.field-ir .direct-label-text { color: #412402; }
+.field-ar .direct-label-text { color: #042c53; }
+.direct-hint {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  margin-top: 2px;
+  opacity: 0.75;
+}
+.field-b  .direct-hint { color: #173404; }
+.field-h  .direct-hint { color: #501313; }
+.field-ir .direct-hint { color: #412402; }
+.field-ar .direct-hint { color: #042c53; }
+
+.direct-num {
+  width: 72px;
+  height: 34px;
+  padding: 4px 10px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 14px; font-weight: 600;
+  text-align: right;
+  font-feature-settings: "tnum" 1;
+}
+.direct-num:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(0, 47, 94, 0.15);
+}
+.direct-actions {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding-top: 10px;
+  margin-top: 4px;
+  border-top: 1px solid var(--border-soft);
+}
+
+/* ── Per-case tab ────────────────────────────────────────────────────── */
+.cases-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+}
+.cases-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+.cases-table th, .cases-table td {
+  padding: 6px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-soft);
+}
+.cases-table tr:last-child td { border-bottom: none; }
+.cases-table th {
+  background: var(--surface-2);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--txt-2);
+}
+.cases-table td:first-child { width: 28px; color: var(--txt-3); }
+.cases-table select {
+  padding: 4px 6px;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 600;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  min-width: 50px;
+  text-align: center;
+}
+.cases-table select:focus { outline: none; border-color: var(--navy); }
+
+.row-x {
+  width: 22px; height: 22px;
+  background: transparent;
+  color: var(--txt-3);
+  font-size: 16px; line-height: 1;
+  border-radius: 50%;
+}
+.row-x:hover { background: var(--red-bg); color: var(--red); }
+
+.class-pill {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.class-B  { background: #eaf3de; color: #173404; border-color: rgba(99,153,34,0.4); }
+.class-H  { background: #fcebeb; color: #501313; border-color: rgba(226,75,74,0.4); }
+.class-IR { background: #faeeda; color: #412402; border-color: rgba(186,117,23,0.4); }
+.class-AR { background: #e6f1fb; color: #042c53; border-color: rgba(55,138,221,0.4); }
+.class-agreement {
+  background: var(--surface-3);
+  color: var(--txt-3);
+  border-color: var(--border);
+  font-style: italic;
+}
+
+.cases-actions {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+.cases-summary {
+  font-size: 12px;
+  flex: 1; min-width: 0;
+}
+.cases-summary strong { font-family: var(--font-mono); color: var(--txt); }
+
+.cases-csv {
+  margin-top: 8px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+}
+.cases-csv-head {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--txt-2);
+  margin-bottom: 8px;
+}
+.cases-csv-actions {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 8px;
+}
+.csv-upload-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  cursor: pointer;
+}
+.csv-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-soft);
+}
+.csv-hint { font-size: 11px; }
+.csv-errors {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid var(--red-bd);
+  border-radius: 6px;
+  font-size: 12px;
+}
+.csv-errors ul { margin: 4px 0 0 18px; }

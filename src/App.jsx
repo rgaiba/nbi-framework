@@ -5,18 +5,17 @@ import Dashboard from './components/Dashboard/Dashboard.jsx'
 import About from './components/About.jsx'
 import Footer from './components/Footer.jsx'
 import { computeMetrics } from './lib/nbi.js'
-import { SCENARIOS, DEFAULT_SCENARIO_ID } from './lib/scenarios.js'
-import './styles/components.css'
+
+// Default counts on first load. Picks a "balanced reader" distribution so
+// the dashboard isn't empty when the page opens.
+const INITIAL_COUNTS = { B: 28, H: 6, IR: 8, AR: 38 }
 
 export default function App() {
   // Two views: 'calculator' (home) and 'about'.
   const [view, setView] = useState('calculator')
 
   // Single source of truth for the calculator. All input modes write to {B, H, IR, AR}.
-  // The initial counts come from a small built-in distribution (kept in scenarios.js
-  // for backward-compatibility, even though the Scenarios tab itself is gone).
-  const initial = SCENARIOS.find(s => s.id === DEFAULT_SCENARIO_ID).counts
-  const [counts, setCounts] = useState(initial)
+  const [counts, setCounts] = useState(INITIAL_COUNTS)
 
   const metrics = useMemo(() => computeMetrics(counts), [counts])
 

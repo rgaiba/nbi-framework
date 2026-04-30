@@ -1,0 +1,236 @@
+/* =============================================================================
+   DASHBOARD
+   NBI hero, secondary metric cards, details toggle, influence flow tile.
+   The adjudication matrix grid lives in shared.css since it's used by both
+   the dashboard's details view and the Definitions tab.
+============================================================================= */
+
+.dashboard {
+  display: flex; flex-direction: column;
+  gap: 16px;
+}
+.dash-section-label {
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--txt-2);
+  margin-bottom: 4px;
+}
+.dash-caption {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--txt-3);
+  line-height: 1.55;
+  font-style: italic;
+}
+.dash-caption sub { font-style: normal; }
+.dash-tile {
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+}
+.dash-details {
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* ── NBI hero ────────────────────────────────────────────────────────── */
+.dash-hero {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  flex-shrink: 0;
+}
+.dash-hero-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.dash-hero-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 16px;
+}
+.dash-hero-left {
+  display: flex; flex-direction: column; gap: 4px;
+  min-width: 0;
+}
+.dash-hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 540px) {
+  .dash-hero-body { grid-template-columns: 1fr; }
+  .dash-hero-right { justify-content: flex-start; }
+}
+.dash-hero-val {
+  font-family: var(--font-mono);
+  font-size: clamp(32px, 4.2vw, 48px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--txt);
+  letter-spacing: -0.01em;
+  font-feature-settings: "tnum" 1;
+}
+.dash-hero-val.val-pos  { color: var(--green); }
+.dash-hero-val.val-neg  { color: var(--red); }
+.dash-hero-val.val-zero { color: var(--txt-2); }
+.dash-hero-ci {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-3);
+  font-feature-settings: "tnum" 1;
+}
+.dash-hero-interp {
+  font-size: 12.5px;
+  color: var(--txt-2);
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+  line-height: 1.55;
+}
+
+/* Slightly larger fraction in hero for visual balance with the big value. */
+.dash-hero .frac { font-size: 14px; }
+.dash-hero .frac-stack { min-width: 78px; gap: 5px; }
+
+/* ── Small metric cards (DIR, AIR, ECR, EIR) ─────────────────────────── */
+.dash-small {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.dash-small-card {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.dash-small-expansion {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--txt);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.dash-small-val {
+  font-family: var(--font-mono);
+  font-size: 24px; font-weight: 700;
+  color: var(--txt);
+  letter-spacing: -0.005em;
+  font-feature-settings: "tnum" 1;
+  line-height: 1;
+  margin-top: 2px;
+}
+.dash-small-ci {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--txt-3);
+  font-feature-settings: "tnum" 1;
+  min-height: 14px;
+  margin-top: 4px;
+}
+.dash-small-formula-inline {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-2);
+  line-height: 1.7;
+  margin-top: 10px;
+  font-feature-settings: "tnum" 1;
+}
+.dash-small-formula-inline sub { font-size: 0.78em; }
+.dash-small-formula-inline .formula-prefix {
+  font-weight: 600;
+  color: var(--txt);
+}
+.dash-small-formula-inline.is-two-line .formula-prefix,
+.dash-small-formula-inline.is-two-line .formula-body {
+  display: block;
+}
+.dash-small-formula-inline.is-two-line .formula-prefix {
+  margin-bottom: 4px;
+}
+.dash-small-desc {
+  font-size: 12px;
+  color: var(--txt-2);
+  line-height: 1.55;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+
+/* ── Details toggle ──────────────────────────────────────────────────── */
+.dash-toggle {
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm); font-weight: 500;
+  color: var(--txt-2);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.dash-toggle:hover {
+  background: white;
+  border-color: var(--border);
+  color: var(--navy);
+}
+.dash-toggle-chev {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+.dash-toggle-chev.is-open {
+  transform: rotate(180deg);
+}
+
+/* ── Influence flow tile ─────────────────────────────────────────────── */
+.dash-flow-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.dash-flow-n {
+  font-size: 11px; color: var(--txt-3);
+  font-family: var(--font-mono);
+}
+.dash-flow-bar {
+  display: flex;
+  height: 28px;
+  background: var(--surface-3);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.dash-flow-empty {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+  font-size: 12px; color: var(--txt-3); font-style: italic;
+}
+.dash-flow-seg {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  transition: width 0.3s ease;
+}
+.seg-b  { background: #639922; }
+.seg-h  { background: #e24b4a; }
+.seg-ir { background: #ba7517; }
+.seg-ar { background: #378add; }
+
+.dash-flow-legend {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--txt-2);
+}
+.legend-item { display: inline-flex; align-items: center; gap: 5px; }
+.legend-swatch {
+  display: inline-block; width: 9px; height: 9px;
+  border-radius: 2px;
+}

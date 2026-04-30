@@ -1,14 +1,9 @@
 import React from 'react'
-import { AdjMatrixGrid } from '../Dashboard/Dashboard.jsx'
+import AdjudicationMatrix from '../shared/AdjudicationMatrix.jsx'
+import Chip from '../shared/Chip.jsx'
 
-// Inline colored variable chip used in the N_disagree formula.
-function Chip({ k }) {
-  return <span className={`def-chip def-chip-${k}`}>{k}</span>
-}
-
-// Definitions tab: variable legend, then the adjudication matrix structure
-// (no counts, just the four classes shown as chips), and the N_disagree
-// composition formula. Live values appear in the dashboard.
+// Definitions tab: variable legend + adjudication matrix structure +
+// N_disagree composition formula. Live values appear in the dashboard.
 export default function DefinitionsInput() {
   return (
     <div className="definitions">
@@ -30,7 +25,7 @@ export default function DefinitionsInput() {
 
       <div className="def-matrix-box">
         <div className="dash-section-label">Adjudication matrix</div>
-        <AdjMatrixGrid />
+        <AdjudicationMatrix />
         <div className="dash-symbolic dash-symbolic-bordered">
           N<sub>disagree</sub> = <Chip k="B" /> + <Chip k="H" /> + <Chip k="IR" /> + <Chip k="AR" />
         </div>

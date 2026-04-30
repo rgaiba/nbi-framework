@@ -1,9 +1,5 @@
 import React from 'react'
-
-// Inline colored variable chip (same as the dashboard / definitions tab).
-function Chip({ k }) {
-  return <span className={`def-chip def-chip-${k}`}>{k}</span>
-}
+import Chip from './shared/Chip.jsx'
 
 function SigCell({ code, count, cls }) {
   return (

@@ -1,0 +1,243 @@
+/* =============================================================================
+   SHARED PRIMITIVES
+   Chips, fractions, adjudication matrix grid, legend boxes, symbolic formula.
+   These styles are used across multiple components and live here so any
+   component can reach them via the central theme bundle.
+============================================================================= */
+
+/* ── Variable chip (B / H / IR / AR) ─────────────────────────────────── */
+.def-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 4px;
+  border: 1px solid;
+  margin: 0 1px;
+  letter-spacing: 0.02em;
+  vertical-align: baseline;
+  font-feature-settings: "tnum" 1;
+}
+.def-chip-B  { background: #eaf3de; color: #173404; border-color: rgba(99,153,34,0.4); }
+.def-chip-H  { background: #fcebeb; color: #501313; border-color: rgba(226,75,74,0.4); }
+.def-chip-IR { background: #faeeda; color: #412402; border-color: rgba(186,117,23,0.4); }
+.def-chip-AR { background: #e6f1fb; color: #042c53; border-color: rgba(55,138,221,0.4); }
+
+/* ── Stacked fraction ────────────────────────────────────────────────── */
+.frac {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.2;
+  color: var(--txt-2);
+}
+.frac-stack {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 64px;
+}
+.frac-num,
+.frac-den {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+.frac-line {
+  height: 1px;
+  background: var(--txt-3);
+  width: 100%;
+  align-self: stretch;
+}
+.frac-mult {
+  white-space: nowrap;
+}
+.frac sub { font-size: 0.7em; vertical-align: sub; }
+
+/* ── Symbolic formula line (used in Definitions tab) ─────────────────── */
+.dash-symbolic {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--txt-2);
+  line-height: 1.7;
+  font-feature-settings: "tnum" 1;
+}
+.dash-symbolic sub { font-size: 0.78em; }
+.dash-symbolic-bordered {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+  text-align: center;
+}
+
+/* ── Adjudication matrix with axis labels ────────────────────────────── */
+.adj-matrix-frame {
+  display: flex; flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+}
+.adj-matrix-x-title {
+  text-align: center;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--navy);
+  padding-left: 78px;
+}
+.adj-matrix-body {
+  display: flex; gap: 8px;
+  align-items: stretch;
+}
+.adj-matrix-y-title {
+  width: 22px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 32px;
+}
+.adj-matrix-y-title span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+}
+.adj-matrix-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 56px 1fr 1fr;
+  gap: 6px;
+}
+.adj-matrix-col-hdr {
+  text-align: center;
+  padding: 4px 2px;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.adj-matrix-col-hdr strong {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt);
+  font-weight: 700;
+}
+.adj-matrix-col-sub {
+  font-size: 10px;
+  color: var(--txt-3);
+  font-style: italic;
+}
+.adj-matrix-row-hdr {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--txt-2);
+}
+.adj-matrix-row-hdr strong {
+  font-weight: 700;
+  color: var(--txt);
+  font-size: 12px;
+}
+.adj-matrix-row-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--txt-3);
+  margin-top: 1px;
+}
+
+.matrix-cell {
+  position: relative;
+  border-radius: 6px;
+  padding: 8px 10px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+  align-items: flex-start;
+  min-height: 64px;
+  border: 1px solid;
+}
+.matrix-cell.cell-b  { background: #eaf3de; border-color: rgba(99,153,34,0.35); }
+.matrix-cell.cell-h  { background: #fcebeb; border-color: rgba(226,75,74,0.35); }
+.matrix-cell.cell-ir { background: #faeeda; border-color: rgba(186,117,23,0.35); }
+.matrix-cell.cell-ar { background: #e6f1fb; border-color: rgba(55,138,221,0.35); }
+.matrix-cell-chip {
+  align-self: flex-start;
+}
+.matrix-cell-count {
+  font-family: var(--font-mono);
+  font-size: 22px; font-weight: 700;
+  line-height: 1;
+  margin-top: 2px;
+  font-feature-settings: "tnum" 1;
+}
+.cell-b  .matrix-cell-count { color: #173404; }
+.cell-h  .matrix-cell-count { color: #501313; }
+.cell-ir .matrix-cell-count { color: #412402; }
+.cell-ar .matrix-cell-count { color: #042c53; }
+.matrix-cell-caption {
+  font-size: 11px;
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+.cell-b  .matrix-cell-caption { color: #2a5028; }
+.cell-h  .matrix-cell-caption { color: #6a1b1b; }
+.cell-ir .matrix-cell-caption { color: #5a3408; }
+.cell-ar .matrix-cell-caption { color: #1a3868; }
+
+@media (max-width: 540px) {
+  .adj-matrix-y-title { display: none; }
+  .adj-matrix-x-title { padding-left: 56px; }
+}
+
+/* ── Legend box (used in Definitions and elsewhere) ──────────────────── */
+.legend-box {
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.legend-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  align-items: baseline;
+}
+.legend-grid-2col {
+  grid-template-columns: auto 1fr auto 1fr;
+  column-gap: 18px;
+}
+@media (max-width: 540px) {
+  .legend-grid-2col {
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+  }
+}
+.legend-grid dt {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--txt);
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum" 1;
+}
+.legend-grid dt sub { font-size: 0.78em; }
+.legend-grid dd {
+  margin: 0;
+  color: var(--txt-2);
+}
+.legend-agreement {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: #501313;
+  font-weight: 500;
+}
+.legend-agreement sub { font-size: 0.78em; }
+.legend-agreement-center {
+  text-align: center;
+}

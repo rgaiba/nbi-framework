@@ -42,7 +42,10 @@ export default function DirectInput({ counts, updateCounts }) {
         {FIELDS.map(f => (
           <div key={f.k} className={`direct-row ${f.cls}`}>
             <div className="direct-meta">
-              <div className="direct-label">{f.k} · {f.label}</div>
+              <div className="direct-label">
+                <span className={`def-chip def-chip-${f.k}`}>{f.k}</span>
+                <span className="direct-label-text">{f.label}</span>
+              </div>
               <div className="direct-hint">{f.hint}</div>
             </div>
             <input
