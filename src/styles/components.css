@@ -81,12 +81,11 @@
 /* ── MAIN ────────────────────────────────────────────────────────────── */
 .main {
   min-height: calc(100vh - var(--nav-h) - 60px);
-  padding: clamp(20px, 2.4vw, 36px) 0 clamp(40px, 5vw, 64px);
+  padding: clamp(14px, 1.8vw, 24px) 0 clamp(40px, 5vw, 64px);
 }
 
 /* Calculator-view page title. Sits in the empty space above the two-pane,
-   centered, serif, prominent but not dominating. Establishes the page as
-   a framework demonstration, not just a calculator widget. */
+   centered, serif, prominent but not dominating. */
 .calc-page-title {
   font-family: var(--font-serif);
   font-size: clamp(20px, 2.4vw, 28px);
@@ -96,7 +95,7 @@
   color: var(--txt);
   text-align: center;
   max-width: 980px;
-  margin: 0 auto clamp(20px, 3vw, 32px);
+  margin: 0 auto clamp(12px, 1.6vw, 18px);
   padding: 0 8px;
 }
 @media (max-width: 600px) {

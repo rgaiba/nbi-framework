@@ -102,7 +102,7 @@ export default function About() {
           <strong>Rahul Gaiba, MD</strong>, originator of the Net Beneficial Influence framework. Bayhealth Medical Center, Dover, Delaware.
         </p>
         <p className="about-citation">
-          Suggested citation: Gaiba R. <em>The Net Beneficial Influence Framework: Quantifying Cooperative Human-AI Decision-Making.</em> Version 1.0. April 2026. nbi.rahulgaibamd.com. A formal methods description is in preparation as a sole-authored preprint on Zenodo (DOI forthcoming).
+          Suggested citation: Gaiba R. <em>The Net Beneficial Influence Framework: Quantifying Cooperative Human-AI Decision-Making.</em> Version 1.0. April 2026. nbi.rahulgaibamd.com. A formal methods description is in preparation as a preprint on Zenodo (DOI forthcoming).
         </p>
       </div>
     </article>
