@@ -13,22 +13,15 @@ export default function App() {
   const [view, setView] = useState('calculator')
 
   // Single source of truth for the calculator. All input modes write to {B, H, IR, AR}.
+  // The initial counts come from a small built-in distribution (kept in scenarios.js
+  // for backward-compatibility, even though the Scenarios tab itself is gone).
   const initial = SCENARIOS.find(s => s.id === DEFAULT_SCENARIO_ID).counts
   const [counts, setCounts] = useState(initial)
-  const [activeScenarioId, setActiveScenarioId] = useState(DEFAULT_SCENARIO_ID)
 
   const metrics = useMemo(() => computeMetrics(counts), [counts])
 
   const updateCounts = useCallback((next) => {
     setCounts(prev => ({ ...prev, ...next }))
-  }, [])
-
-  const loadScenario = useCallback((scenarioId) => {
-    const s = SCENARIOS.find(x => x.id === scenarioId)
-    if (s) {
-      setCounts(s.counts)
-      setActiveScenarioId(s.id)
-    }
   }, [])
 
   return (
@@ -37,20 +30,22 @@ export default function App() {
       <main className="main">
         <div className="container">
           {view === 'calculator' ? (
-            <div className="two-pane">
-              <section className="pane pane-calculator" aria-label="Calculator inputs">
-                <Calculator
-                  counts={counts}
-                  updateCounts={updateCounts}
-                  loadScenario={loadScenario}
-                  activeScenarioId={activeScenarioId}
-                  setActiveScenarioId={setActiveScenarioId}
-                />
-              </section>
-              <section className="pane pane-dashboard" aria-label="Live metrics dashboard">
-                <Dashboard counts={counts} metrics={metrics} />
-              </section>
-            </div>
+            <>
+              <h1 className="calc-page-title">
+                The Net Beneficial Influence Framework: Quantifying Cooperative Human-AI Decision-Making
+              </h1>
+              <div className="two-pane">
+                <section className="pane pane-calculator" aria-label="Calculator inputs">
+                  <Calculator
+                    counts={counts}
+                    updateCounts={updateCounts}
+                  />
+                </section>
+                <section className="pane pane-dashboard" aria-label="Live metrics dashboard">
+                  <Dashboard counts={counts} metrics={metrics} />
+                </section>
+              </div>
+            </>
           ) : (
             <About />
           )}

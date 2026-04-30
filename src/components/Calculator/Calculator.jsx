@@ -2,18 +2,14 @@ import React, { useState } from 'react'
 import DefinitionsInput from './DefinitionsInput.jsx'
 import PerCaseInput from './PerCaseInput.jsx'
 import DirectInput from './DirectInput.jsx'
-import ScenarioInput from './ScenarioInput.jsx'
 
 const TABS = [
   { id: 'definitions', label: 'Definitions' },
   { id: 'cases',       label: 'Per-case' },
   { id: 'direct',      label: 'Direct' },
-  { id: 'scenarios',   label: 'Scenarios' },
 ]
 
-export default function Calculator({
-  counts, updateCounts, loadScenario, activeScenarioId, setActiveScenarioId,
-}) {
+export default function Calculator({ counts, updateCounts }) {
   const [tab, setTab] = useState('definitions')
 
   return (
@@ -35,19 +31,10 @@ export default function Calculator({
       <div className="calc-panel">
         {tab === 'definitions' && <DefinitionsInput />}
         {tab === 'cases' && (
-          <PerCaseInput
-            applyCounts={(next) => { updateCounts(next); setActiveScenarioId(null) }}
-          />
+          <PerCaseInput applyCounts={updateCounts} />
         )}
         {tab === 'direct' && (
-          <DirectInput
-            counts={counts}
-            updateCounts={updateCounts}
-            onAnyChange={() => setActiveScenarioId(null)}
-          />
-        )}
-        {tab === 'scenarios' && (
-          <ScenarioInput activeId={activeScenarioId} onLoad={loadScenario} />
+          <DirectInput counts={counts} updateCounts={updateCounts} />
         )}
       </div>
     </div>

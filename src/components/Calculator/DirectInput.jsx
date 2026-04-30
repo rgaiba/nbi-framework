@@ -11,16 +11,14 @@ function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export default function DirectInput({ counts, updateCounts, onAnyChange }) {
+export default function DirectInput({ counts, updateCounts }) {
   const handle = (k, raw) => {
     const v = Math.max(0, Math.floor(Number(raw) || 0))
     updateCounts({ [k]: v })
-    if (onAnyChange) onAnyChange()
   }
 
   const reset = () => {
     updateCounts({ B: 0, H: 0, IR: 0, AR: 0 })
-    if (onAnyChange) onAnyChange()
   }
 
   // Random sample biased toward realistic-looking distributions: more AR than H,
@@ -32,7 +30,6 @@ export default function DirectInput({ counts, updateCounts, onAnyChange }) {
       IR: rand(3, 20),
       AR: rand(15, 45),
     })
-    if (onAnyChange) onAnyChange()
   }
 
   return (
