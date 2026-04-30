@@ -865,29 +865,154 @@
 }
 .csv-errors ul { margin: 4px 0 0 18px; }
 
-/* ── ABOUT (placeholder) ─────────────────────────────────────────────── */
-.about-placeholder {
-  max-width: 720px;
+/* ── ABOUT PAGE ──────────────────────────────────────────────────────── */
+.about-page {
+  max-width: 880px;
   margin: 0 auto;
-  padding: clamp(24px, 4vw, 48px) 0;
+  padding: clamp(20px, 3vw, 36px) 0;
 }
-.about-placeholder h1 {
-  font-size: var(--fs-2xl);
-  margin-bottom: 16px;
+.about-title {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--txt);
+  margin-bottom: 24px;
 }
-.about-placeholder p {
+.about-text {
   font-size: var(--fs-base);
-  color: var(--txt-2);
   line-height: 1.7;
-  margin-bottom: 16px;
+  color: var(--txt);
+  margin-bottom: 14px;
 }
-.about-meta {
-  margin-top: 24px;
-  padding: 12px 14px;
-  background: var(--surface-2);
-  border-radius: var(--radius);
+.about-text:last-of-type {
+  margin-bottom: 24px;
+}
+.about-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(17px, 1.6vw, 20px);
+  font-weight: 700;
+  color: var(--txt);
+  margin: 28px 0 10px;
+}
+.about-list {
   font-size: var(--fs-sm);
+  line-height: 1.7;
   color: var(--txt-2);
+  padding-left: 20px;
+  margin-bottom: 24px;
+}
+.about-list li {
+  margin-bottom: 6px;
+}
+.about-list sub { font-size: 0.78em; }
+
+.about-author {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+}
+.about-author-line {
+  font-size: var(--fs-base);
+  color: var(--txt);
+  margin-bottom: 10px;
+  line-height: 1.55;
+}
+.about-citation {
+  font-size: var(--fs-sm);
+  color: var(--txt-3);
+  line-height: 1.6;
+}
+
+/* ── SIGNATURE CARDS (illustrative dashboards on the About page) ─────── */
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 8px 0 8px;
+}
+@media (max-width: 720px) {
+  .signature-grid { grid-template-columns: 1fr; }
+}
+
+.sig-card {
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  display: flex; flex-direction: column;
+}
+.sig-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--txt);
+  letter-spacing: -0.005em;
+}
+.sig-subtitle {
+  font-size: 12px;
+  color: var(--txt-3);
+  margin-top: 2px;
+  margin-bottom: 12px;
+}
+
+.sig-matrix {
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+.sig-matrix-h {
+  text-align: center;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--txt-3);
+  padding: 2px 0;
+}
+.sig-matrix-v {
+  display: flex; align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--txt-2);
+}
+
+.sig-cell {
+  display: flex; align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+.sig-cell.cell-b  { background: #eaf3de; border-color: rgba(99,153,34,0.30); }
+.sig-cell.cell-h  { background: #fcebeb; border-color: rgba(226,75,74,0.30); }
+.sig-cell.cell-ir { background: #faeeda; border-color: rgba(186,117,23,0.30); }
+.sig-cell.cell-ar { background: #e6f1fb; border-color: rgba(55,138,221,0.30); }
+.sig-cell-count {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: auto;
+  font-feature-settings: "tnum" 1;
+}
+.sig-cell.cell-b  .sig-cell-count { color: #173404; }
+.sig-cell.cell-h  .sig-cell-count { color: #501313; }
+.sig-cell.cell-ir .sig-cell-count { color: #412402; }
+.sig-cell.cell-ar .sig-cell-count { color: #042c53; }
+
+.sig-metrics {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-2);
+  font-feature-settings: "tnum" 1;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.sig-interp {
+  font-size: 12.5px;
+  color: var(--txt-2);
+  line-height: 1.55;
 }
 
 /* ── FOOTER ──────────────────────────────────────────────────────────── */
