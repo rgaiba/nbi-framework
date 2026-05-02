@@ -1,10 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AdjudicationMatrix from '../shared/AdjudicationMatrix.jsx'
 import Chip from '../shared/Chip.jsx'
+import Fraction from '../shared/Fraction.jsx'
 
-// Definitions tab: variable legend + adjudication matrix structure +
-// N_disagree composition formula. Live values appear in the dashboard.
+// All five metric formulas, in canonical order: NBI, AIR, ECR, EIR, DIR.
+const FORMULAE = [
+  {
+    k: 'NBI',
+    name: 'Net Beneficial Influence',
+    num: (<><Chip k="B" /> − <Chip k="H" /></>),
+    den: (<>N<sub>disagree</sub></>),
+    mult: '× 100',
+  },
+  {
+    k: 'AIR',
+    name: 'Appropriate Influence Ratio',
+    num: (<><Chip k="B" /></>),
+    den: (<><Chip k="B" /> + <Chip k="H" /></>),
+  },
+  {
+    k: 'ECR',
+    name: 'Error Correction Rate',
+    num: (<><Chip k="B" /></>),
+    den: (<><Chip k="B" /> + <Chip k="IR" /></>),
+    mult: '× 100',
+  },
+  {
+    k: 'EIR',
+    name: 'Error Induction Rate',
+    num: (<><Chip k="H" /></>),
+    den: (<><Chip k="H" /> + <Chip k="AR" /></>),
+    mult: '× 100',
+  },
+  {
+    k: 'DIR',
+    name: 'Decision Influence Rate',
+    num: (<><Chip k="B" /> + <Chip k="H" /></>),
+    den: (<>N<sub>disagree</sub></>),
+    mult: '× 100',
+  },
+]
+
 export default function DefinitionsInput() {
+  const [showFormulae, setShowFormulae] = useState(false)
+
   return (
     <div className="definitions">
       <p className="muted">
@@ -30,6 +69,37 @@ export default function DefinitionsInput() {
           N<sub>disagree</sub> = <Chip k="B" /> + <Chip k="H" /> + <Chip k="IR" /> + <Chip k="AR" />
         </div>
       </div>
+
+      <button
+        className="formulae-toggle"
+        onClick={() => setShowFormulae(s => !s)}
+        aria-expanded={showFormulae}
+        aria-controls="formulae-panel"
+      >
+        <span>{showFormulae ? 'Hide formulae' : 'Show formulae'}</span>
+        <span className={`formulae-toggle-chev ${showFormulae ? 'is-open' : ''}`} aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+      </button>
+
+      {showFormulae && (
+        <div id="formulae-panel" className="formulae-panel">
+          {FORMULAE.map(f => (
+            <div key={f.k} className="formulae-item">
+              <div className="formulae-name">
+                <strong>{f.k}</strong>
+                <span className="formulae-name-expansion">{f.name}</span>
+              </div>
+              <div className="formulae-equation">
+                <span className="formulae-equation-eq">=</span>
+                <Fraction num={f.num} den={f.den} mult={f.mult} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

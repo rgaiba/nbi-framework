@@ -48,25 +48,6 @@
   color: var(--navy);
   margin-bottom: 12px;
 }
-.dash-hero-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 16px;
-}
-.dash-hero-left {
-  display: flex; flex-direction: column; gap: 4px;
-  min-width: 0;
-}
-.dash-hero-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-@media (max-width: 540px) {
-  .dash-hero-body { grid-template-columns: 1fr; }
-  .dash-hero-right { justify-content: flex-start; }
-}
 .dash-hero-val {
   font-family: var(--font-mono);
   font-size: clamp(32px, 4.2vw, 48px);
@@ -93,10 +74,6 @@
   border-top: 1px solid var(--border-soft);
   line-height: 1.55;
 }
-
-/* Slightly larger fraction in hero for visual balance with the big value. */
-.dash-hero .frac { font-size: 14px; }
-.dash-hero .frac-stack { min-width: 78px; gap: 5px; }
 
 /* ── Small metric cards (DIR, AIR, ECR, EIR) ─────────────────────────── */
 .dash-small {
@@ -133,26 +110,6 @@
   font-feature-settings: "tnum" 1;
   min-height: 14px;
   margin-top: 4px;
-}
-.dash-small-formula-inline {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--txt-2);
-  line-height: 1.7;
-  margin-top: 10px;
-  font-feature-settings: "tnum" 1;
-}
-.dash-small-formula-inline sub { font-size: 0.78em; }
-.dash-small-formula-inline .formula-prefix {
-  font-weight: 600;
-  color: var(--txt);
-}
-.dash-small-formula-inline.is-two-line .formula-prefix,
-.dash-small-formula-inline.is-two-line .formula-body {
-  display: block;
-}
-.dash-small-formula-inline.is-two-line .formula-prefix {
-  margin-bottom: 4px;
 }
 .dash-small-desc {
   font-size: 12px;

@@ -1,8 +1,8 @@
 import React from 'react'
-import Chip from '../shared/Chip.jsx'
-import Fraction from '../shared/Fraction.jsx'
 import { interpretMetric, formatCI } from '../../lib/nbi.js'
 
+// NBI hero card. Big primary value, 95% CI, and a one-line interpretation.
+// The formula now lives in the Definitions tab's Formulae collapsible.
 export default function NbiHero({ metrics }) {
   const v = metrics.NBI
   const interp = interpretMetric('NBI', v)
@@ -13,19 +13,8 @@ export default function NbiHero({ metrics }) {
   return (
     <div className="dash-hero">
       <div className="dash-hero-label">Net beneficial influence</div>
-      <div className="dash-hero-body">
-        <div className="dash-hero-left">
-          <div className={`dash-hero-val ${cls}`}>{display}</div>
-          {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
-        </div>
-        <div className="dash-hero-right">
-          <Fraction
-            num={<><Chip k="B" /> − <Chip k="H" /></>}
-            den={<>N<sub>disagree</sub></>}
-            mult="× 100"
-          />
-        </div>
-      </div>
+      <div className={`dash-hero-val ${cls}`}>{display}</div>
+      {ci && <div className="dash-hero-ci">95% CI {ci}</div>}
       <div className="dash-hero-interp">{interp}</div>
     </div>
   )

@@ -54,6 +54,75 @@
   margin-bottom: 8px;
 }
 
+/* ── Formulae collapsible (Definitions tab) ──────────────────────────── */
+.formulae-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm); font-weight: 500;
+  color: var(--txt-2);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.formulae-toggle:hover {
+  background: white;
+  border-color: var(--border);
+  color: var(--navy);
+}
+.formulae-toggle-chev {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+.formulae-toggle-chev.is-open {
+  transform: rotate(180deg);
+}
+.formulae-panel {
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  display: flex; flex-direction: column;
+  gap: 14px;
+}
+.formulae-item {
+  display: flex; align-items: center;
+  gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.formulae-item:last-child { border-bottom: none; padding-bottom: 0; }
+.formulae-name {
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+.formulae-name strong {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.formulae-name-expansion {
+  font-size: 10.5px;
+  color: var(--txt-3);
+  line-height: 1.3;
+}
+.formulae-equation {
+  display: flex; align-items: center;
+  gap: 8px;
+  flex: 1; min-width: 0;
+}
+.formulae-equation-eq {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--txt-2);
+}
+.formulae-equation .frac {
+  font-size: 13px;
+}
+
 /* ── Direct tab ──────────────────────────────────────────────────────── */
 .direct-fields {
   display: flex; flex-direction: column; gap: 8px;
