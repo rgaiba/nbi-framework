@@ -196,6 +196,9 @@
   border-radius: var(--radius);
   border: 1px solid var(--border-soft);
 }
+.legend-box .dash-section-label {
+  margin-bottom: 10px;
+}
 .legend-grid {
   margin: 0;
   display: grid;

@@ -47,10 +47,11 @@ export default function DefinitionsInput() {
   return (
     <div className="definitions">
       <p className="muted">
-        Variable definitions (all binary 0/1) and the structure of the adjudication matrix.
+        Variable definitions and the structure of the adjudication matrix.
       </p>
 
       <div className="legend-box">
+        <div className="dash-section-label">Binary inputs</div>
         <dl className="legend-grid legend-grid-2col">
           <dt>D<sub>i</sub></dt> <dd>Clinician's initial decision</dd>
           <dt>A</dt>             <dd>AI's recommendation</dd>

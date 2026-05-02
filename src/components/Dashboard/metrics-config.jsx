@@ -24,12 +24,12 @@ export const SECONDARY_METRICS = [
     k: 'ECR',
     expansion: 'Error Correction Rate',
     formula: (<><Chip k="B" /> / (<Chip k="B" /> + <Chip k="IR" />) × 100</>),
-    desc: 'Proportion of clinician errors corrected after the AI nudge.',
+    desc: 'Proportion of clinician errors corrected.',
   },
   {
     k: 'EIR',
     expansion: 'Error Induction Rate',
     formula: (<><Chip k="H" /> / (<Chip k="H" /> + <Chip k="AR" />) × 100</>),
-    desc: 'Proportion of correct decisions converted to errors after the AI nudge.',
+    desc: 'Proportion of correct decisions converted to errors.',
   },
 ]
