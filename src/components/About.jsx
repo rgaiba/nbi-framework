@@ -54,14 +54,14 @@ const SIGNATURES = [
     subtitle: 'net harm',
     counts: { B: 18, H: 22, IR: 4, AR: 14 },
     metrics: 'NBI −6.9% · EIR 61.1% · AIR 0.45',
-    interp: 'Same trust behavior, different AI quality. Indiscriminate revision now flips correct decisions to errors at scale; net effect is harmful.',
+    interp: 'High trust behavior, low AI accuracy. Indiscriminate revision of correct decisions to errors at scale; the net effect may be harmful.',
   },
   {
     title: 'Low trust',
     subtitle: 'algorithm aversion',
     counts: { B: 4, H: 1, IR: 22, AR: 33 },
     metrics: 'ECR 15.4% · DIR 8.3% · NBI +5%',
-    interp: 'Clinician rarely revises, even when AI is correct. Most flagged errors go uncorrected; AI is in the room but contributing little.',
+    interp: 'Clinician rarely revises, even when AI is correct. Most flagged errors go uncorrected; AI is in the loop but contributing little.',
   },
 ]
 
