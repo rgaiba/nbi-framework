@@ -73,7 +73,7 @@ export default function About() {
       </h1>
 
       <p className="about-text">
-        Current artificial intelligence (AI) evaluation methods ask, "Is AI better than clinicians?" While this question is necessary, it is not sufficient. It does not translate directly into improved diagnostic accuracy or outcomes unless clinicians use AI and change their decisions as a result. Contrary to the now-common phrase "human-in-the-loop," AI is, in fact, in the loop. And, humans are the final decision-makers, at least for now. Biases both in favor of and against AI have been well documented, and delivering the benefits of higher AI accuracy depends on baseline diagnostic accuracies and patterns of AI utilization by clinicians.
+        Current artificial intelligence (AI) evaluation methods ask, "Is AI better than clinicians?" While this question is necessary, it is not sufficient. It does not translate directly into improved diagnostic accuracy or outcomes unless clinicians use AI and change their decisions as a result. Contrary to the now-common phrase "human-in-the-loop," AI, in fact, is in the loop. And, humans are the final decision-makers, at least for now. Biases both in favor of and against AI have been well documented, and delivering the benefits of higher AI accuracy depends on baseline diagnostic accuracies and patterns of AI utilization by clinicians.
       </p>
 
       <p className="about-text">
@@ -99,10 +99,11 @@ export default function About() {
 
       <div className="about-author">
         <p className="about-author-line">
-          <strong>Rahul Gaiba, MD</strong>, originator of the Net Beneficial Influence framework. Bayhealth Medical Center, Dover, Delaware.
+          Rahul Gaiba, MD,<br />
+          Bayhealth Medical Center, Dover, Delaware.
         </p>
         <p className="about-citation">
-          Suggested citation: Gaiba R. <em>The Net Beneficial Influence Framework: Quantifying Cooperative Human-AI Decision-Making.</em> Version 1.0. April 2026. nbi.rahulgaibamd.com. A formal methods description is in preparation as a preprint on Zenodo (DOI forthcoming).
+          Suggested citation: Gaiba, R. <em>The Net Beneficial Influence Framework: Quantifying Cooperative Human-AI Decision-Making.</em> Version 1.0. April 2026. nbi.rahulgaibamd.com. A formal methods description is forthcoming.
         </p>
       </div>
     </article>
