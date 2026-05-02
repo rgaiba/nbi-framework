@@ -73,15 +73,15 @@ export default function About() {
       </h1>
 
       <p className="about-text">
-        Current artificial intelligence (AI) evaluation methods ask, "Is AI better than clinicians?" While this question is necessary, it is not sufficient. It does not translate directly into improved diagnostic accuracy or outcomes unless clinicians use AI and change their decisions as a result. Contrary to the now-common phrase "human-in-the-loop," AI, in fact, is in the loop. And, humans are the final decision-makers, at least for now. Biases both in favor of and against AI have been well documented, and delivering the benefits of higher AI accuracy depends on baseline diagnostic accuracies and patterns of AI utilization by clinicians.
+        Current artificial intelligence (AI) evaluation methods ask, "Is AI better than clinicians?" While this question is necessary, it is not sufficient. It does not translate directly into improved diagnostic accuracy or outcomes unless clinicians use AI and change their decisions as a result. In contrast to the now-common phrase "human-in-the-loop," AI is, in fact, in the loop, and clinicians make final clinical decisions after implicit Bayesian reasoning. Biases both in favor of and against AI have been well documented, and delivering the benefits of higher AI accuracy depends on baseline diagnostic accuracies and patterns of AI utilization by clinicians.
       </p>
 
       <p className="about-text">
-        The Net Beneficial Influence (NBI) framework asks, "Does using AI make clinicians better?" A 2 × 2 matrix adjudicates the initial and final clinician decisions against a reference standard, and five explainable metrics are calculated. Cases in which AI and clinicians agree on a decision offer no incremental benefit in improving the clinician's accuracy attributable to AI use. Such cases are excluded from the calculation, and only cases of disagreement are included.
+        The Net Beneficial Influence (NBI) framework asks, "Does using AI make clinicians better?" A 2 × 2 matrix adjudicates the initial and final clinician decisions after AI inputs against a reference standard. Cases in which AI and clinicians agree on a decision offer no incremental accuracy gains for clinicians attributable to AI use. Such cases are excluded from the calculation, and only cases of disagreement are included. Five explainable metrics are calculated.
       </p>
 
       <p className="about-text">
-        The primary output is a Net Beneficial Influence (NBI), along with four secondary metrics that further characterize the outcome of AI-clinician interaction, quantitatively. The following four patterns demonstrate the multiple possibilities across different levels of AI accuracy and clinician trust.
+        The primary output is a Net Beneficial Influence (NBI), along with four secondary metrics that quantitatively characterize the outcome of AI-clinician interaction. The following four patterns demonstrate the multiple possibilities across different levels of AI accuracy and clinician trust.
       </p>
 
       <div className="signature-grid">
