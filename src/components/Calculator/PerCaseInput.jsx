@@ -114,9 +114,8 @@ export default function PerCaseInput({ applyCounts }) {
   return (
     <div className="cases">
       <p className="muted">
-        Add cases one by one. Each row is auto-classified as soon as all four
-        values are set. Click Apply to push the totals to the dashboard.
-        Variable definitions are in the Definitions tab.
+        Each row is auto-classified as soon as all four values are set.
+        Click Apply to push the inputs to the dashboard.
       </p>
 
       <div className="cases-table-wrap">
